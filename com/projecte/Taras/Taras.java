@@ -1,7 +1,7 @@
 package com.projecte.Taras;
 
 public class Taras {
-    public void funcionNombre(){
+    public static void funcionNombre(){
         System.out.println("Taras.");
     }
 }

@@ -1,4 +1,5 @@
 package com.projecte.main;
+import com.projecte.Lidia.Lidia;
 import com.projecte.Richart.Richart;
 
 public class ProgramaPrincipal {

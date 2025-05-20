@@ -28,4 +28,8 @@ public class Usuario implements Serializable {
         idReal++;
     }
 
+    @Override
+    public String toString() {
+        return id + " - " + nombreUsuario + " - " + apellidosUsuario + " - " + poblacionUsuario + " - " + emailUsuario + " - " + Nickname + " - " + contrasenya;
+    }
 }

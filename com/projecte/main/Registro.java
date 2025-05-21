@@ -1,9 +1,12 @@
 package com.projecte.main;
 
 import com.projecte.Objetos.Usuario;
-import java.io.FileOutputStream;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Registro {
@@ -16,30 +19,54 @@ public class Registro {
 
         System.out.println("Por favor, indique sus apellidos:");
         String apellidosUsuario = sc.nextLine();
+        
         System.out.println("Por favor, indique población donde reside:");
         String poblacionUsuario = sc.nextLine();
-        System.out.println("Por favor, indique su email:");
-        String email = sc.nextLine();
-        System.out.println("Por favor, indique fecha de nacimiento:");
-        String fechanacimientoUsuario = sc.nextLine(); //hacer una función que pille el datetime para el tema del nacimiento.
+        
+        String email;
+        do {
+            System.out.println("Por favor, indique su email (debe contener '@'):");
+            email = sc.nextLine();
+        } while (!email.contains("@"));
+        
+        Date fechaNacimientoUsuario = null;
+        System.out.println("Por favor, indique fecha de nacimiento (dd/mm/yyyy):");
+        boolean fechaCorrecta = false;
+        do {
+            try {
+                fechaNacimientoUsuario = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+                fechaCorrecta = true;
+            } catch (ParseException e) {
+                System.out.println("Formato de fecha incorrecto, por favor, vuelva a intentarlo.");
+            }
+        } while (!fechaCorrecta);
+        
         System.out.println("¿Cuál será su Nickname?");
         String nicknameUsuario = sc.nextLine();
-        System.out.println("¿Cuál será su contraseña?"); // Aqui entrará un búcle para asegurarse que poner bien dos veces la contraseña.
+        
+        String contrasenyaUsuario, confirmarContrasenya;
+        do {
+            System.out.println("¿Cuál será su contraseña?");
+            contrasenyaUsuario = sc.nextLine();
+            System.out.println("Por favor, confirme su contraseña:");
+            confirmarContrasenya = sc.nextLine();
+        } while (!contrasenyaUsuario.equals(confirmarContrasenya));
 
-        String contrasenyaUsuario = sc.nextLine();
+        Usuario nuevoUsuario = new Usuario(nombreUsuario, apellidosUsuario, poblacionUsuario, email, fechaNacimientoUsuario, nicknameUsuario, contrasenyaUsuario);
 
-        Usuario nuevoUsuario = new Usuario(nombreUsuario, apellidosUsuario, poblacionUsuario, email, null, nicknameUsuario, contrasenyaUsuario);
-
-        try {
-            FileOutputStream fos = new FileOutputStream("../datos/datosUsuarios.txt");
-            ObjectOutputStream out = new ObjectOutputStream(fos);
-            out.writeObject(nuevoUsuario);
-            out.close();
-
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("E:\\Deberes esta semana\\Proyecto-Programaci-n---1ero-DAM\\com\\projecte\\datos\\datosUsuarios.txt", true))) { //Cambiar el path obviamente, es que estaba testeando en mi PC ú3ù
+            writer.write(nuevoUsuario.toString());
+            writer.newLine();
         } catch (IOException e) {
             System.out.println(e);
         }
 
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("E:\\Deberes esta semana\\Proyecto-Programaci-n---1ero-DAM\\com\\projecte\\datos\\usuariosContras.txt", true))) { //Cambiar el path obviamente, es que estaba testeando en mi PC ú3ù
+            writer.write(confirmarContrasenya);
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
-
 }
+

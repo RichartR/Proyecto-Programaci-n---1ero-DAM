@@ -50,18 +50,24 @@ public class Registro {
             contrasenyaUsuario = sc.nextLine();
             System.out.println("Por favor, confirme su contraseña:");
             confirmarContrasenya = sc.nextLine();
+
+            if(!contrasenyaUsuario.equals(confirmarContrasenya)){
+                System.out.println("Las contraseñas no coinciden, inténtelo de nuevo.");
+            }
         } while (!contrasenyaUsuario.equals(confirmarContrasenya));
 
         Usuario nuevoUsuario = new Usuario(nombreUsuario, apellidosUsuario, poblacionUsuario, email, fechaNacimientoUsuario, nicknameUsuario, contrasenyaUsuario);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("E:\\Deberes esta semana\\Proyecto-Programaci-n---1ero-DAM\\com\\projecte\\datos\\datosUsuarios.txt", true))) { //Cambiar el path obviamente, es que estaba testeando en mi PC ú3ù
-            writer.write(nuevoUsuario.toString());
+        //Registrar el usuario en datosUsuarios.txt
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("com\\projecte\\datos\\datosUsuarios.txt", true))) { 
+            writer.write(nuevoUsuario.guardarUsuario());
             writer.newLine();
         } catch (IOException e) {
             System.out.println(e);
         }
 
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter("E:\\Deberes esta semana\\Proyecto-Programaci-n---1ero-DAM\\com\\projecte\\datos\\usuariosContras.txt", true))) { //Cambiar el path obviamente, es que estaba testeando en mi PC ú3ù
+        //Registrar la contraseña del usuario en usuariosContras.txt
+         try (BufferedWriter writer = new BufferedWriter(new FileWriter("com\\projecte\\datos\\usuariosContras.txt", true))) { 
             writer.write(confirmarContrasenya);
             writer.newLine();
         } catch (IOException e) {

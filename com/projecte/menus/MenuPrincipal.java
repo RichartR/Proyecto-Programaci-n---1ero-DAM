@@ -2,6 +2,8 @@ package com.projecte.menus;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.projecte.main.Registro;
+
 public class MenuPrincipal {
     static Scanner scanner = new Scanner(System.in);
 
@@ -21,6 +23,7 @@ public class MenuPrincipal {
             switch (opcion) {
                 case 1:
                     System.out.println("Registro");
+                    Registro.registrarUsuario();
                     break;
                 case 2:
                     System.out.println("Iniciar sesión");

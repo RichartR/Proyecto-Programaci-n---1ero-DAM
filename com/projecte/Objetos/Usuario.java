@@ -40,7 +40,7 @@ public class Usuario implements Serializable {
         String ultimaLinea = "";
         try {
             String linea = "";
-            BufferedReader archivoDatos = new BufferedReader(new FileReader("com\\projecte\\datos\\datosUsuarios.txt"));
+            BufferedReader archivoDatos = new BufferedReader(new FileReader("com/projecte/datos/datosUsuarios.txt"));
             while ((linea = archivoDatos.readLine()) != null) {
                 ultimaLinea = linea;
             }

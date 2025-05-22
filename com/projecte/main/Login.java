@@ -13,32 +13,36 @@ import java.util.Scanner;
         //!!Leer linea en la que está el correo y leer la misma linea del archivo usuariosContras.txt. si coincide, login!!
 
 public class Login {
-    public void pedirDatos() throws IOException{
 
-        
+    public static String [] pedirDatos() throws IOException{
+
         Scanner scanner = new Scanner(System.in);
 
         boolean correoValido = false;
         String correo;
 
-
-        
         while (!correoValido) {
+            boolean encontrado = false;
+            int contadorLinea = 0;
+            String datosUsuario;
+
+            String datosSeparados[] = new String[2];;
+
             System.out.print("------Login usuario------ (Pulsa 0 para salir.)");
-            System.out.print ("Correo: ");
+            do {
+                System.out.print ("\nCorreo: ");
             correo = scanner.nextLine();
 
             if (correo.equals("0")) {
                 System.out.print("Saliendo del login de usuarios.");
-                return;
+                return null;
             }
 
+
             try  {
-                FileReader archivo = new FileReader("../datos/datosUsuarios.txt");
+                FileReader archivo = new FileReader("com/projecte/datos/datosUsuarios.txt");
                 BufferedReader br = new BufferedReader(archivo);
                 String linea;
-                int contadorLinea = 0;
-                boolean encontrado = false;
                 int lineaCorreo = 0;
 
                 while ((linea = br.readLine()) != null) {
@@ -46,10 +50,13 @@ public class Login {
                     if (partes[4].equals(correo)) {
                     lineaCorreo = contadorLinea;
                     encontrado = true;
+                    datosUsuario = linea;
+                    datosSeparados[0] = datosUsuario.split(":")[1];
+                    datosSeparados[1] = datosUsuario.split(":")[2];
                     break;
-    
-                    }
-                    contadorLinea ++;
+                    
+                }
+                contadorLinea++;
                 }
 
                 if (!encontrado) {
@@ -58,35 +65,46 @@ public class Login {
             } catch (FileNotFoundException e) {
                 System.out.println(e.getMessage());
             }
-
-            System.out.print("Introduzca la contraseña del usuario");
-            String constrasenya = scanner.nextLine();
-
+            } while (!encontrado);
+            
             boolean contrasenyaValida = false;
+            int intentos = 5;
             
             while (!contrasenyaValida) {
                 try {
+                    System.out.print("\nIntroduzca la contraseña del usuario: ");
+                    String contrasenya = scanner.nextLine();
                     
-                    FileReader archivo = new FileReader("../datos/usuariosContras.txt");
+                    FileReader archivo = new FileReader("com/projecte/datos/usuariosContras.txt");
                     BufferedReader br = new BufferedReader(archivo);
                     String linea;
-                    int intentos = 5;
+
+                    int lineasContrasenya = 0;
 
                     while ((linea = br.readLine()) != null) {
-                        while (intentos != 0) {
-                            
-                        }
+                        if(contadorLinea == lineasContrasenya && intentos != 0){
+                            if(linea.equals(contrasenya)){
+                                System.out.println("Las contraseñas coinciden.");
+                                return datosSeparados;
+                            } else {
+                                System.out.println("Contraseña incorrecta inténtelo de nuevo. Intentos restantes " + (intentos - 1));
+                                intentos--;
+                                
+                                if (intentos == 0) {
+                                    System.out.println("Intentos excedidos, cerrando...");
+                                    return null;
+                                }
+
+                                break;
+                            }
+                        } 
+                        lineasContrasenya++;
                     }
                 } catch (FileNotFoundException e) {
                     System.out.println(e.getMessage());
                 }
             }
         }
-        
-
-
-
-        
-
+        return null;
     }
 }

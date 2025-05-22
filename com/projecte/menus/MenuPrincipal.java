@@ -1,13 +1,15 @@
 package com.projecte.menus;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.projecte.main.Login;
 import com.projecte.main.Registro;
 
 public class MenuPrincipal {
     static Scanner scanner = new Scanner(System.in);
 
-    public static void mostrarMenuPrincipal(){
+    public static void mostrarMenuPrincipal() throws IOException{
         int opcion = 0;
         do {
             System.out.println("\n===== Bienvenido =====\n¿Qué desea hacer?\n1.- Registrarme\n2.- Iniciar sesión\n3.- Salir");
@@ -22,12 +24,15 @@ public class MenuPrincipal {
             }
             switch (opcion) {
                 case 1:
-                    System.out.println("Registro");
+                    System.out.println("\n");
                     Registro.registrarUsuario();
                     break;
                 case 2:
-                    System.out.println("Iniciar sesión");
-                    MenuLogueado.mostrarMenuLogueado(); //Menú que aparece cuando se confirma el log com.projecte.menus.MenuLogueado
+                    System.out.println("\n");
+                    String [] datos = Login.pedirDatos();
+                    if(datos != null){
+                        MenuLogueado.mostrarMenuLogueado(datos); //Menú que aparece cuando se confirma el log com.projecte.menus.MenuLogueado
+                    }
                     break;
                 case 3:
                     System.out.println("Saliendo...");

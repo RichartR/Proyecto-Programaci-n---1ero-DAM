@@ -6,10 +6,10 @@ import java.util.Scanner;
 public class MenuLogueado {
     static Scanner scanner = new Scanner(System.in);
 
-    public static void mostrarMenuLogueado(){ //Menú que aparece una vez ya estás logueado
+    public static void mostrarMenuLogueado(String [] datos){ //Menú que aparece una vez ya estás logueado
         int opcion = 0;
         do {
-            System.out.println("\n===== Bienvenido =====\n¿Qué desea hacer?\n1.- Ver listas\n2.- Añadir datos a una lista\n3.- Eliminar datos de una lista\n4.- Salir");
+            System.out.println("\n===== Bienvenido " + datos[0] + " " + datos[1] + " =====\n¿Qué desea hacer?\n1.- Ver listas\n2.- Añadir datos a una lista\n3.- Eliminar datos de una lista\n4.- Salir");
             System.out.print("Seleccione una opción: ");
             try {
                 opcion = scanner.nextInt();

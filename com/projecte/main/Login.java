@@ -3,23 +3,21 @@ package com.projecte.main;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
-//logica para ver si el correo existe entre un try cax en un if, donde lea el archivo de los usuarios con un foreach
-        //si lo encuentra entonces sigue a la contraseña, si no se lo vuelve a pedir y le marca el error con el try catch hasta
-        //que añada un correo válido o se salga (si le da al 0.)
 
-        //para analizar si la contraseña es correcta, se guardará el número de línea en el que se encuentra el correo,
+
         //y a apartir de ahi, se analizará con la columna de la contraseña, y si es igual se entonces se le da acceso, si no,
         //el usuario tendrá 5 intentos para poner la contraseña, si se agotan los intentos, se le echará del método.
 
+        //!!Leer linea en la que está el correo y leer la misma linea del archivo usuariosContras.txt. si coincide, login!!
+
 public class Login {
-    public void pedirDatos(){
+    public void pedirDatos() throws IOException{
 
         
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("------Login usuario------");
-        System.out.print ("Correo: ");
         boolean correoValido = false;
         String correo;
 
@@ -38,10 +36,50 @@ public class Login {
             try  {
                 FileReader archivo = new FileReader("../datos/datosUsuarios.txt");
                 BufferedReader br = new BufferedReader(archivo);
+                String linea;
+                int contadorLinea = 0;
+                boolean encontrado = false;
+                int lineaCorreo = 0;
 
-                
+                while ((linea = br.readLine()) != null) {
+                    String [] partes = linea.split(":");
+                    if (partes[4].equals(correo)) {
+                    lineaCorreo = contadorLinea;
+                    encontrado = true;
+                    break;
+    
+                    }
+                    contadorLinea ++;
+                }
+
+                if (!encontrado) {
+                   System.out.print("Correo no encontrado, por favor, ingrese un correo nuevo.");   
+                } 
             } catch (FileNotFoundException e) {
                 System.out.println(e.getMessage());
+            }
+
+            System.out.print("Introduzca la contraseña del usuario");
+            String constrasenya = scanner.nextLine();
+
+            boolean contrasenyaValida = false;
+            
+            while (!contrasenyaValida) {
+                try {
+                    
+                    FileReader archivo = new FileReader("../datos/usuariosContras.txt");
+                    BufferedReader br = new BufferedReader(archivo);
+                    String linea;
+                    int intentos = 5;
+
+                    while ((linea = br.readLine()) != null) {
+                        while (intentos != 0) {
+                            
+                        }
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
         

@@ -1,1 +1,2 @@
-com.projecte.Objetos.Usuario@27973e9b
+0:Admin:Admin:admin:admin@admin.com:admin:ROL_ADMIN
+

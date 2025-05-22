@@ -1,5 +1,4 @@
 package com.projecte.main;
-import com.projecte.Objetos.Usuario;
 import com.projecte.Lidia.Lidia;
 import com.projecte.Richart.Richart;
 import com.projecte.Taras.*;
@@ -10,7 +9,5 @@ public class ProgramaPrincipal {
         Richart.nombreRichart();
         Lidia.lidiaNombre();
         Taras.funcionNombre();
-
-        Registro.registrarUsuario();
     }
 }

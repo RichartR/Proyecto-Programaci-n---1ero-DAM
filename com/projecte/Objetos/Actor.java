@@ -45,5 +45,11 @@ public class Actor implements Serializable {
         this.genero = genero;
     }
     
-    
+    //!Métodos
+
+
+    @Override
+    public String toString() {
+        return "Nombre: " + nombre + "\n" + "Género: " + genero + "\n" + "Nacionalidad: " + nacionalidad + "\n" + "Edad: " + edad + "\n";
+    }
 }

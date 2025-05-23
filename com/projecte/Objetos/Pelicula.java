@@ -41,6 +41,14 @@ public class Pelicula {
     public void setDirector(String director) {
         this.director = director;
     }
+
+    //!Métodos
+
+
+    @Override
+    public String toString() {
+        return "Título: " + titulo + "\n" + "Género: " + genero + "\n" + "Año sálida: " + anyoSalida + "\n" + "Director: " + director + "\n";
+    }
 }
 
 

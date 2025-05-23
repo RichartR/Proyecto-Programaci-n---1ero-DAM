@@ -55,7 +55,11 @@ public class Director {
         return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + "\n";
     }
 
-    public static void mostrarDirectores(List<Director> directores) {
+    public static void mostrarDirectoresPersonal(){
+        
+    }
+
+    public static void mostrarDirectoresGenerales(List<Director> directores) {
         if (directores.isEmpty()) {
             System.out.println("Lista de directores vacía.\nSaliendo al menú...");
         }

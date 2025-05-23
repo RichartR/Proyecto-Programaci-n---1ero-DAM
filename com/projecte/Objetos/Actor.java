@@ -54,7 +54,11 @@ public class Actor implements Serializable {
         return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + "\n";
     }
 
-    public static void mostrarActores(List<Actor> actores) {
+    public static void mostrarActoresPersonal(){
+        
+    }
+
+    public static void mostrarActoresGenerales(List<Actor> actores) {
         if (actores.isEmpty()) {
             System.out.println("Lista de directores vacía.\nVolviendo al menú...");
             return;

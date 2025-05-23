@@ -54,7 +54,11 @@ public class Pelicula {
         return "Título: " + titulo + " | " + "Género: " + genero + " | " + "Año sálida: " + anyoSalida + " | " + "Director: " + director + "\n";
     }
 
-    public static void mostrarPeliculas(List<Pelicula> peliculas){
+    public static void mostrarPeliculasPersonal(){
+        
+    }
+
+    public static void mostrarPeliculasGenerales(List<Pelicula> peliculas){
         if (peliculas.isEmpty()) {
             System.out.println("Lista de películas vacía.\nSaliendo al menú.");
             return;

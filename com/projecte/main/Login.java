@@ -12,99 +12,85 @@ import java.util.Scanner;
 
         //!!Leer linea en la que está el correo y leer la misma linea del archivo usuariosContras.txt. si coincide, login!!
 
-public class Login {
+    public class Login {
 
-    public static String [] pedirDatos() throws IOException{
-
-        Scanner scanner = new Scanner(System.in);
-
-        boolean correoValido = false;
-        String correo;
-
-        while (!correoValido) {
-            boolean encontrado = false;
-            int contadorLinea = 0;
-            String datosUsuario;
-
-            String datosSeparados[] = new String[2];;
-
-            System.out.print("------Login usuario------ (Pulsa 0 para salir.)");
-            do {
-                System.out.print ("\nCorreo: ");
-            correo = scanner.nextLine();
-
-            if (correo.equals("0")) {
-                System.out.print("Saliendo del login de usuarios.");
-                return null;
-            }
-
-
-            try  {
-                FileReader archivo = new FileReader("com/projecte/datos/datosUsuarios.txt");
-                BufferedReader br = new BufferedReader(archivo);
-                String linea;
-                int lineaCorreo = 0;
-
-                while ((linea = br.readLine()) != null) {
-                    String [] partes = linea.split(":");
-                    if (partes[4].equals(correo)) {
-                    lineaCorreo = contadorLinea;
-                    encontrado = true;
-                    datosUsuario = linea;
-                    datosSeparados[0] = datosUsuario.split(":")[1];
-                    datosSeparados[1] = datosUsuario.split(":")[2];
-                    break;
-                    
+        public static String[] pedirDatos() throws IOException {
+            System.out.println("------Login usuario------ (Pulsa 0 para salir.)");
+            Scanner scanner = new Scanner(System.in);
+    
+            String correo;
+            String[] datosSeparados = new String[2];
+            int lineaCorreo = -1;
+    
+            while (true) {
+                System.out.print("Correo: ");
+                correo = scanner.nextLine();
+    
+                if (correo.equals("0")) {
+                    System.out.println("Saliendo del login de usuarios.");
+                    return null;
                 }
-                contadorLinea++;
-                }
-
-                if (!encontrado) {
-                   System.out.print("Correo no encontrado, por favor, ingrese un correo nuevo.");   
-                } 
-            } catch (FileNotFoundException e) {
-                System.out.println(e.getMessage());
-            }
-            } while (!encontrado);
-            
-            boolean contrasenyaValida = false;
-            int intentos = 5;
-            
-            while (!contrasenyaValida) {
-                try {
-                    System.out.print("\nIntroduzca la contraseña del usuario: ");
-                    String contrasenya = scanner.nextLine();
-                    
-                    FileReader archivo = new FileReader("com/projecte/datos/usuariosContras.txt");
-                    BufferedReader br = new BufferedReader(archivo);
+    
+                boolean encontrado = false;
+    
+                // Buscar el correo en el archivo
+                try (BufferedReader br = new BufferedReader(new FileReader("com/projecte/datos/datosUsuarios.txt"))) {
                     String linea;
-
-                    int lineasContrasenya = 0;
-
+                    int contadorLinea = 0;
+    
                     while ((linea = br.readLine()) != null) {
-                        if(contadorLinea == lineasContrasenya && intentos != 0){
-                            if(linea.equals(contrasenya)){
-                                System.out.println("Las contraseñas coinciden.");
-                                return datosSeparados;
-                            } else {
-                                System.out.println("Contraseña incorrecta inténtelo de nuevo. Intentos restantes " + (intentos - 1));
-                                intentos--;
-                                
-                                if (intentos == 0) {
-                                    System.out.println("Intentos excedidos, cerrando...");
-                                    return null;
-                                }
-
-                                break;
-                            }
-                        } 
-                        lineasContrasenya++;
+                        String[] partes = linea.split(":");
+                        if (partes.length > 4 && partes[4].equals(correo)) {
+                            lineaCorreo = contadorLinea;
+                            datosSeparados[0] = partes[1]; // nombre
+                            datosSeparados[1] = partes[2]; // apellido
+                            encontrado = true;
+                            break;
+                        }
+                        contadorLinea++;
+                    }
+    
+                    if (!encontrado) {
+                        System.out.println("Correo no encontrado, por favor, ingrese un correo nuevo.");
+                        continue;
                     }
                 } catch (FileNotFoundException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("Archivo no encontrado: " + e.getMessage());
+                    return null;
+                }
+    
+                // Verificar contraseña
+                int intentos = 5;
+                while (intentos > 0) {
+                    System.out.print("Introduzca la contraseña del usuario: ");
+                    String contrasenya = scanner.nextLine();
+    
+                    try (BufferedReader br = new BufferedReader(new FileReader("com/projecte/datos/usuariosContras.txt"))) {
+                        String linea;
+                        int lineaActual = 0;
+    
+                        while ((linea = br.readLine()) != null) {
+                            if (lineaActual == lineaCorreo) {
+                                if (linea.equals(contrasenya)) {
+                                    System.out.println("Las contraseñas coinciden.");
+                                    return datosSeparados;
+                                } else {
+                                    intentos--;
+                                    System.out.println("Contraseña incorrecta. Intentos restantes: " + intentos);
+                                    if (intentos == 0) {
+                                        System.out.println("Intentos excedidos, cerrando...");
+                                        return null;
+                                    }
+                                    break;
+                                }
+                            }
+                            lineaActual++;
+                        }
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Archivo no encontrado: " + e.getMessage());
+                        return null;
+                    }
                 }
             }
         }
-        return null;
     }
-}

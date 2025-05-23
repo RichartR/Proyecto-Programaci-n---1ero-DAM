@@ -50,6 +50,6 @@ public class Actor implements Serializable {
 
     @Override
     public String toString() {
-        return "Nombre: " + nombre + "\n" + "Género: " + genero + "\n" + "Nacionalidad: " + nacionalidad + "\n" + "Edad: " + edad + "\n";
+        return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + "\n";
     }
 }

@@ -1,5 +1,7 @@
 package com.projecte.Objetos;
 
+import java.util.List;
+
 public class Pelicula {
     private String titulo;
     private int anyoSalida; 
@@ -42,12 +44,25 @@ public class Pelicula {
         this.director = director;
     }
 
+    
+
     //!Métodos
 
 
     @Override
     public String toString() {
         return "Título: " + titulo + " | " + "Género: " + genero + " | " + "Año sálida: " + anyoSalida + " | " + "Director: " + director + "\n";
+    }
+
+    public static void mostrarPeliculas(List<Pelicula> peliculas){
+        if (peliculas.isEmpty()) {
+            System.out.println("Lista de películas vacía.\nSaliendo al menú.");
+            return;
+        }
+
+        for (Pelicula p : peliculas) {
+            p.toString();
+        }
     }
 }
 

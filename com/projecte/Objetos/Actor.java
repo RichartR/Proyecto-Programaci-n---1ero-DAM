@@ -1,6 +1,7 @@
 package com.projecte.Objetos;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Actor implements Serializable {
     private String nombre;
@@ -52,4 +53,16 @@ public class Actor implements Serializable {
     public String toString() {
         return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + "\n";
     }
+
+    public static void mostrarActores(List<Actor> actores) {
+        if (actores.isEmpty()) {
+            System.out.println("Lista de directores vacía.\nVolviendo al menú...");
+            return;
+        }
+
+        for (Actor a : actores) {
+            a.toString();
+        }
+    }
+
 }

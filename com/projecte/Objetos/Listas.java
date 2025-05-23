@@ -22,6 +22,7 @@ public class Listas {
             String nombre = sc.nextLine();
             System.out.println("Edad del actor:");
             int edad = sc.nextInt();
+            sc.nextLine();
             System.out.println("Nacionalidad del Actor:");
             String nacionalidad = sc.nextLine();
             System.out.println("Género: (F o M)");
@@ -39,7 +40,7 @@ public class Listas {
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println(e);
         }
 
     }
@@ -56,6 +57,8 @@ public class Listas {
             String nombre = sc.nextLine();
             System.out.println("Edad del director:");
             int edad = sc.nextInt();
+            sc.nextLine();
+
             System.out.println("Nacionalidad del director:");
             String nacionalidad = sc.nextLine();
             System.out.println("Género: (F o M)");
@@ -90,6 +93,7 @@ public class Listas {
             String titulo = sc.nextLine();
             System.out.println("Año en la que salió :");
             int anyoSalida = sc.nextInt();
+            sc.nextLine();
             System.out.println("Género de la película: (EJ: Terror)");
             String genero = sc.nextLine();
             System.out.println("Director que lo dirigió:");
@@ -99,7 +103,7 @@ public class Listas {
             peliculas.add(pelicula);
 
             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/datos/pelicula.dades", false));) {
-                out.writeObject(pelicula);
+                out.writeObject(peliculas);
                 out.close();
             } catch (IOException e) {
                 System.out.println("Problema: " + e);

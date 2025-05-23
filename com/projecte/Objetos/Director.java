@@ -1,5 +1,7 @@
 package com.projecte.Objetos;
 
+import java.util.List;
+
 public class Director {
 
     private String nombre;
@@ -51,6 +53,16 @@ public class Director {
     @Override
     public String toString() {
         return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + "\n";
+    }
+
+    public static void mostrarDirectores(List<Director> directores) {
+        if (directores.isEmpty()) {
+            System.out.println("Lista de directores vacía.\nSaliendo al menú...");
+        }
+
+        for (Director d : directores) {
+            d.toString();
+        }
     }
 
     

@@ -55,7 +55,7 @@ public class Actor implements Serializable {
     }
 
     public static void mostrarActores(List<Actor> actores) {
-        if (actores.isEmpty()) {
+        if (actores == null) {
             System.out.println("Lista de directores vacía.\nVolviendo al menú...");
             return;
         }

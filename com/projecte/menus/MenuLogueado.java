@@ -22,8 +22,9 @@ public class MenuLogueado {
         ArrayList<Pelicula> peliculasGlobal = deserializePeliculaGlobal();
         ArrayList<Director> directoresGlobal = deserializeDirectorGlobal();
 
+
         do {
-            System.out.println("\n===== Bienvenido " + datos[0] + " " + datos[1] + " =====\n¿Qué desea hacer?\n1.- Ver listas generales\n2.- Añadir datos a una lista\n3.- Eliminar datos de una lista\n4.- Salir");
+            System.out.println("\n===== Bienvenido " + datos[0] + " " + datos[1] + " =====\n¿Qué desea hacer?\n1.- Ver listas generales\n2.- Añadir datos a una lista general\n3.- Eliminar datos de una lista\n4.- Salir");
             System.out.print("Seleccione una opción: ");
             try {
                 opcion = scanner.nextInt();
@@ -35,10 +36,10 @@ public class MenuLogueado {
             }
             switch (opcion) {
                 case 1:
-                    System.out.println(eleccionLista());
+                    System.out.println(eleccionLista(actoresGlobal, peliculasGlobal, directoresGlobal, opcion));
                     break;
                 case 2:
-                    System.out.println("Añadir");
+                    System.out.println(eleccionLista(actoresGlobal, peliculasGlobal, directoresGlobal, opcion));
                     break;
                 case 3:
                     System.out.println("Eliminar");
@@ -53,25 +54,49 @@ public class MenuLogueado {
     }
 
     //SubMenú listas
-    public static int eleccionLista(){
-        int opcion = 0;
+    public static int eleccionLista(ArrayList<Actor> actores, ArrayList<Pelicula> peliculas, ArrayList<Director> directores, int opcion){
+        int opcionTipo = 0;
         do {
             System.out.println("\n¿Qué lista quieres ver? [1. Actores / 2. Películas / 3. Directores]");
             try {
-                opcion = scanner.nextInt();
+                opcionTipo = scanner.nextInt();
                 scanner.nextLine();
             } catch (InputMismatchException e) {
                 System.out.println("Debe ingresar un número válido.");
                 scanner.nextLine();
                 continue;
             }
-            switch (opcion) {
+            switch (opcionTipo) {
                 case 1:
-                    return 1;
+                    switch (opcion) {
+                        case 1:
+                            Actor.mostrarActores(actores);
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    break;
                 case 2:
-                    return 2;
+                    switch (opcion) {
+                        case 1:
+                            Pelicula.mostrarPeliculas(peliculas);
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    break;
                 case 3:
-                    return 3;
+                    switch (opcion) {
+                        case 1:
+                            Director.mostrarDirectores(directores);
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    break;
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.");
             }

@@ -1,9 +1,9 @@
 package com.projecte.Objetos;
 
-import java.util.List;
-
-public class Director {
-
+import java.io.Serializable;
+import java.util.ArrayList;
+public class Director implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private int edad;
     private String nacionalidad;
@@ -49,19 +49,20 @@ public class Director {
 
 
     //Métodos
-
     @Override
     public String toString() {
-        return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + "\n";
+        return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + " años";
     }
 
-    public static void mostrarDirectores(List<Director> directores) {
-        if (directores.isEmpty()) {
+    public static void mostrarDirectores(ArrayList<Director> directores) {
+        if (directores.size() == 0) {
             System.out.println("Lista de directores vacía.\nSaliendo al menú...");
         }
 
-        for (Director d : directores) {
-            d.toString();
+        System.out.println("\nDirectores:");
+
+        for (int i = 0; i <  directores.size(); i++) {
+            System.out.println((i+1) + ". " + directores.get(i));
         }
     }
 

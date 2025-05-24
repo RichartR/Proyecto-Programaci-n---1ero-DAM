@@ -15,11 +15,11 @@ import java.util.Scanner;
     public class Login {
 
         public static String[] pedirDatos() throws IOException {
-            System.out.println("------Login usuario------ (Pulsa 0 para salir.)");
+            System.out.println("===== Login usuario ===== (Pulsa 0 para salir.)");
             Scanner scanner = new Scanner(System.in);
     
             String correo;
-            String[] datosSeparados = new String[2];
+            String[] datosSeparados = new String[4];
             int lineaCorreo = -1;
     
             while (true) {
@@ -44,6 +44,8 @@ import java.util.Scanner;
                             lineaCorreo = contadorLinea;
                             datosSeparados[0] = partes[1]; // nombre
                             datosSeparados[1] = partes[2]; // apellido
+                            datosSeparados[2] = partes[0] + partes[4].split("@")[0]; // id + primera parte del correo
+                            datosSeparados[3] = partes[6]; // rol
                             encontrado = true;
                             break;
                         }

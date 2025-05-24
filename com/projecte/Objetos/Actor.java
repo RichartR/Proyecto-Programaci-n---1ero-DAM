@@ -1,16 +1,16 @@
 package com.projecte.Objetos;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Actor implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private int edad;
     private String nacionalidad;
     private String genero;
 
     // Constructors
-
 
     public Actor(String nombre, int edad, String nacionalidad, String genero) {
         this.nombre = nombre;
@@ -47,22 +47,20 @@ public class Actor implements Serializable {
     }
     
     //!Métodos
-
-
     @Override
     public String toString() {
-        return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + "\n";
+        return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + " años";
     }
 
-    public static void mostrarActores(List<Actor> actores) {
-        if (actores == null) {
+    public static void mostrarActores(ArrayList<Actor> actores) {
+        if (actores.size() == 0) {
             System.out.println("Lista de directores vacía.\nVolviendo al menú...");
             return;
         }
-
-        for (Actor a : actores) {
-            a.toString();
+        
+        System.out.println("\nLista de actores:");
+        for (int i = 0; i < actores.size(); i++) {
+            System.out.println((i+1) + ". " + actores.get(i));
         }
     }
-
 }

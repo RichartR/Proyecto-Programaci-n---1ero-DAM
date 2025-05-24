@@ -1,15 +1,20 @@
 package com.projecte.menus;
 
-import java.io.EOFException;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import java.util.Iterator;
+
 import com.projecte.Objetos.Actor;
 import com.projecte.Objetos.Director;
+import com.projecte.Objetos.Listas;
 import com.projecte.Objetos.Pelicula;
 
 public class MenuLogueado {
@@ -21,10 +26,14 @@ public class MenuLogueado {
         ArrayList<Actor> actoresGlobal = deserializeActorGlobal();
         ArrayList<Pelicula> peliculasGlobal = deserializePeliculaGlobal();
         ArrayList<Director> directoresGlobal = deserializeDirectorGlobal();
+        ArrayList<Actor> actoresUsuario = deserializeActorUsuario(datos);
+        ArrayList<Pelicula> peliculasUsuario = deserializePeliculaUsuario(datos);
+        ArrayList<Director> directoresUsuario = deserializeDirectorUsuario(datos);
 
+        sincronizarListasUsuarios(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, datos[2]); // Sincronizar las listas de los usuarios con las listas globales
 
         do {
-            System.out.println("\n===== Bienvenido " + datos[0] + " " + datos[1] + " =====\n¿Qué desea hacer?\n1.- Ver listas generales\n2.- Añadir datos a una lista general\n3.- Eliminar datos de una lista\n4.- Salir");
+            System.out.println("\n===== Bienvenido " + datos[0] + " " + datos[1] + " =====\n¿Qué desea hacer?\n1.- Ver listas generales\n2.- Añadir datos a una lista general\n3.- Ver listas del usuario\n4.- Añadir datos a lista de usuario\n5.- Eliminar datos de una lista "  + (datos[3].equals("ROL_ADMIN") ? "general" : "del usuario" ) + "\n6.- Salir");
             System.out.print("Seleccione una opción: ");
             try {
                 opcion = scanner.nextInt();
@@ -35,29 +44,36 @@ public class MenuLogueado {
                 continue;
             }
             switch (opcion) {
-                case 1:
-                    System.out.println(eleccionLista(actoresGlobal, peliculasGlobal, directoresGlobal, opcion));
+                case 1: //Menú de ver listas general
+                    eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
                     break;
-                case 2:
-                    System.out.println(eleccionLista(actoresGlobal, peliculasGlobal, directoresGlobal, opcion));
+                case 2: //Menú de añadir datos general
+                    eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
                     break;
-                case 3:
-                    System.out.println("Eliminar");
+                case 3: //Menú de ver listas usuario
+                    eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
                     break;
-                case 4:
+                case 4: //Menú de añadir datos usuario
+                    eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
+                    break;
+                case 5: //Menú de eliminar datos
+                    eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
+                    break;
+                case 6: //Salir
                     System.out.println("Saliendo...");
                     break;
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.");
             }
-        } while (opcion != 4);
+        } while (opcion != 6);
     }
 
     //SubMenú listas
-    public static int eleccionLista(ArrayList<Actor> actores, ArrayList<Pelicula> peliculas, ArrayList<Director> directores, int opcion){
+    public static void eleccionLista(ArrayList<Actor> actoresGlobales, ArrayList<Actor> actoresUsuario, ArrayList<Pelicula> peliculasGlobal, ArrayList<Pelicula> peliculasUsuario, ArrayList<Director> directoresGlobal, ArrayList<Director> directoresUsuario, int opcion, String [] datos){
         int opcionTipo = 0;
+        boolean salir = false;
         do {
-            System.out.println("\n¿Qué lista quieres ver? [1. Actores / 2. Películas / 3. Directores]");
+            System.out.println("\n¿Qué lista quieres ver? [1. Actores / 2. Películas / 3. Directores / 4. Salir]");
             try {
                 opcionTipo = scanner.nextInt();
                 scanner.nextLine();
@@ -67,102 +83,267 @@ public class MenuLogueado {
                 continue;
             }
             switch (opcionTipo) {
-                case 1:
+                case 1: //Actores
                     switch (opcion) {
-                        case 1:
-                            Actor.mostrarActores(actores);
+                        case 1: //Ver lista global
+                            Actor.mostrarActores(actoresGlobales);
+                            salir = true;
                             break;
-                    
+                        case 2: //Añadir datos global
+                            if(Listas.crearActor(actoresGlobales)){
+                                salir = true;
+                            }
+                            break;
+                        case 3: //Ver lista usuario
+                            Actor.mostrarActores(actoresUsuario);
+                            salir = true;
+                            break;
+                        case 4: //Añadir datos usuario
+                            if(Listas.anyadirActor(actoresUsuario, actoresGlobales, datos[2])){
+                                salir = true;
+                            }
+                            break;
+                        case 5: //Eliminar datos
+                        if(datos[3].equals("ROL_ADMIN")){ 
+                            if(Listas.eliminarActor(actoresGlobales)){
+                                salir = true;
+                            }
+                        } else {
+                            // Falta el método eliminar de la lista del usuario
+                        }
                         default:
                             break;
                     }
                     break;
-                case 2:
+                case 2: //Películas
                     switch (opcion) {
-                        case 1:
-                            Pelicula.mostrarPeliculas(peliculas);
+                        case 1: //Ver lista global
+                            Pelicula.mostrarPeliculas(peliculasGlobal);
+                            salir = true;
                             break;
-                    
+                        case 2: //Añadir datos global
+                            if (Listas.crearPelicula(peliculasGlobal)) {
+                                salir = true;
+                            };
+                            break;
+                        case 3: //Ver lista usuario
+                            Pelicula.mostrarPeliculas(peliculasUsuario);
+                            salir = true;
+                            break;
+                        case 4: //Añadir datos usuario
+                            if(Listas.anyadirPelicula(peliculasUsuario, peliculasGlobal, datos[2])){
+                                salir = true;
+                            }
+                            break;
+                        case 5: //Eliminar datos
+                            if(datos[3].equals("ROL_ADMIN")){
+                                if(Listas.eliminarPelicula(peliculasGlobal)){
+                                    salir = true;
+                                } else{
+
+                                }
+                            }
                         default:
                             break;
                     }
                     break;
-                case 3:
+                case 3: //Directores
                     switch (opcion) {
-                        case 1:
-                            Director.mostrarDirectores(directores);
+                        case 1: //Ver lista global
+                            Director.mostrarDirectores(directoresGlobal);
+                            salir = true;
                             break;
-                    
+                        case 2: //Añadir datos global
+                            if(Listas.crearDirector(directoresGlobal)){
+                                salir = true;
+                            }
+                            break;
+                        case 3: //Ver lista usuario
+                            Director.mostrarDirectores(directoresUsuario);
+                            salir = true;
+                            break;
+                        case 4: //Añadir datos usuario
+                            if(Listas.anyadirDirector(directoresUsuario, directoresGlobal, datos[2])){
+                                salir = true;
+                            }
+                            break;
+                        case 5: //Eliminar datos
+                            if(datos[3].equals("ROL_ADMIN")){
+                                if(Listas.eliminarDirector(directoresGlobal)){
+                                    salir = true;
+                                } else{
+                                    
+                                }
+                            }
                         default:
                             break;
                     }
+                    break;
+                case 4:
+                    System.out.println("Saliendo...");
+                    salir = true;
                     break;
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.");
             }
-        } while (opcion != 1 || opcion != 2 || opcion != 3);
+        } while (!salir);
 
-        return 0;
     }
 
-    //Deserializar
-    public static ArrayList<Actor> deserializeActorGlobal(){
-        ArrayList<Actor> actores = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("com/projecte/datos/actor.dades"));
-            try{
-                actores = (ArrayList<Actor>) in.readObject();  
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch(IOException e) {  
-                e.printStackTrace();  
-            }
-                
-            in.close();
-        } catch (Exception e) {
-            // TODO: handle exception
+    //Deserializar listas globales
+    public static ArrayList<Actor> deserializeActorGlobal() {
+        ArrayList<Actor> actores = new ArrayList<>(); // Devuelve el array vacío por defecto
+    
+        File file = new File("com/projecte/datos/actor.dades");
+        if (!file.exists() || file.length() == 0) {
+            // Si el archivo no existe o está vacío, devolvemos el array vacío
+            return actores;
         }
-
+    
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+            actores = (ArrayList<Actor>) in.readObject();
+        } catch (Exception e) {
+            System.out.println("Error al deserializar: " + e.getMessage());
+            e.printStackTrace();
+        }
+    
         return actores;
     }
-
+    
     public static ArrayList<Pelicula> deserializePeliculaGlobal(){
-        ArrayList<Pelicula> peliculas = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("com/projecte/datos/actor.dades"));
-            try{
-                peliculas = (ArrayList<Pelicula>) in.readObject();  
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch(IOException e) {  
-                e.printStackTrace();  
-            }
-                
-            in.close();
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
+        ArrayList<Pelicula> peliculas = new ArrayList<>(); // Devuelve el array vacío por defecto
 
+        File file = new File("com/projecte/datos/pelicula.dades");
+        if (!file.exists() || file.length() == 0) {
+            // Si el archivo no existe o está vacío, devolvemos el array vacío
+            return peliculas;
+        }
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+            peliculas = (ArrayList<Pelicula>) in.readObject();
+        } catch (Exception e) {
+            System.out.println("Error al deserializar: " + e.getMessage());
+            e.printStackTrace();
+        }
+    
         return peliculas;
     }
 
     public static ArrayList<Director> deserializeDirectorGlobal(){
-        ArrayList<Director> directores = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("com/projecte/datos/actor.dades"));
-            try{
-                directores = (ArrayList<Director>) in.readObject();  
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch(IOException e) {  
-                e.printStackTrace();  
-            }
-                
-            in.close();
+        ArrayList<Director> directores = new ArrayList<>(); // Devuelve el array vacío por defecto
+
+        File file = new File("com/projecte/datos/director.dades");
+        if (!file.exists() || file.length() == 0) {
+            // Si el archivo no existe o está vacío, devolvemos el array vacío
+            return directores;
+        }
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+            directores = (ArrayList<Director>) in.readObject();
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println("Error al deserializar: " + e.getMessage());
+            e.printStackTrace();
+        }
+    
+        return directores;
+    }
+
+    //Deserializar listas usuario
+    public static ArrayList<Actor> deserializeActorUsuario(String [] datos) {
+        ArrayList<Actor> actores = new ArrayList<>(); // Devuelve el array vacío por defecto
+    
+        File file = new File("com/projecte/usuarios/" + datos[2] + "/actores.llista");
+        if (!file.exists() || file.length() == 0) {
+            // Si el archivo no existe o está vacío, devolvemos el array vacío
+            return actores;
+        }
+    
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+            actores = (ArrayList<Actor>) in.readObject();
+        } catch (Exception e) {
+            System.out.println("Error al deserializar: " + e.getMessage());
+            e.printStackTrace();
+        }
+    
+        return actores;
+    }
+    
+    public static ArrayList<Pelicula> deserializePeliculaUsuario(String [] datos){
+        ArrayList<Pelicula> peliculas = new ArrayList<>(); // Devuelve el array vacío por defecto
+
+        File file = new File("com/projecte/usuarios/" + datos[2] + "/peliculas.llista");
+        if (!file.exists() || file.length() == 0) {
+            // Si el archivo no existe o está vacío, devolvemos el array vacío
+            return peliculas;
+        }
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+            peliculas = (ArrayList<Pelicula>) in.readObject();
+        } catch (Exception e) {
+            System.out.println("Error al deserializar: " + e.getMessage());
+            e.printStackTrace();
+        }
+    
+        return peliculas;
+    }
+
+    public static ArrayList<Director> deserializeDirectorUsuario(String [] datos){
+        ArrayList<Director> directores = new ArrayList<>(); // Devuelve el array vacío por defecto
+
+        File file = new File("com/projecte/usuarios/" + datos[2] + "/directores.llista");
+        if (!file.exists() || file.length() == 0) {
+            // Si el archivo no existe o está vacío, devolvemos el array vacío
+            return directores;
+        }
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+            directores = (ArrayList<Director>) in.readObject();
+        } catch (Exception e) {
+            System.out.println("Error al deserializar: " + e.getMessage());
+            e.printStackTrace();
+        }
+    
+        return directores;
+    }
+
+    /* Sincronizar los cambios de las listas generales */
+    public static void sincronizarListasUsuarios(ArrayList<Actor> actoresGlobales, ArrayList<Actor> actoresUsuario, ArrayList<Pelicula> peliculasGlobales, ArrayList<Pelicula> peliculasUsuario, ArrayList<Director> directoresGlobales, ArrayList<Director> directoresUsuario, String usuario) {
+        // Sincronizar Actores
+        Iterator<Actor> itActor = actoresUsuario.iterator();
+        while (itActor.hasNext()) {
+            Actor actor = itActor.next();
+            if (!actoresGlobales.contains(actor)) {
+                itActor.remove();
+            }
+        }
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/usuarios/" + usuario + "/actores.llista", false))) {
+            out.writeObject(actoresUsuario);
+        } catch (IOException e) {
+            System.out.println("Problema: " + e);
         }
 
-        return directores;
+        // Sincronizar Películas
+        Iterator<Pelicula> itPelicula = peliculasUsuario.iterator();
+        while (itPelicula.hasNext()) {
+            Pelicula pelicula = itPelicula.next();
+            if (!peliculasGlobales.contains(pelicula)) {
+                itPelicula.remove();
+            }
+        }
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/usuarios/" + usuario + "/peliculas.llista", false))) {
+            out.writeObject(peliculasUsuario);
+        } catch (IOException e) {
+            System.out.println("Problema: " + e);
+        }
+
+        // Sincronizar Directores
+        Iterator<Director> itDirector = directoresUsuario.iterator();
+        while (itDirector.hasNext()) {
+            Director director = itDirector.next();
+            if (!directoresGlobales.contains(director)) {
+                itDirector.remove();
+            }
+        }
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/usuarios/" + usuario + "/directores.llista", false))) {
+            out.writeObject(directoresUsuario);
+        } catch (IOException e) {
+            System.out.println("Problema: " + e);
+        }
     }
 }

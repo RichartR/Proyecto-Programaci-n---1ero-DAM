@@ -1,8 +1,10 @@
 package com.projecte.Objetos;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Pelicula {
+public class Pelicula implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String titulo;
     private int anyoSalida; 
     private String genero;
@@ -51,17 +53,19 @@ public class Pelicula {
 
     @Override
     public String toString() {
-        return "Título: " + titulo + " | " + "Género: " + genero + " | " + "Año sálida: " + anyoSalida + " | " + "Director: " + director + "\n";
+        return "Título: " + titulo + " | " + "Género: " + genero + " | " + "Año sálida: " + anyoSalida + " | " + "Director: " + director ;
     }
 
-    public static void mostrarPeliculas(List<Pelicula> peliculas){
-        if (peliculas.isEmpty()) {
-            System.out.println("Lista de películas vacía.\nSaliendo al menú.");
+    public static void mostrarPeliculas(ArrayList<Pelicula> peliculas) {
+        if (peliculas.size() == 0) {
+            System.out.println("Lista de películas vacía.\nVolviendo al menú...");
             return;
         }
 
-        for (Pelicula p : peliculas) {
-            p.toString();
+        System.out.println("\nLista de películas:");
+        
+        for (int i = 0; i < peliculas.size(); i++) {
+            System.out.println((i+1) + ". " + peliculas.get(i));
         }
     }
 }

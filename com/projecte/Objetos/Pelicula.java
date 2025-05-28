@@ -3,7 +3,7 @@ package com.projecte.Objetos;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pelicula implements Serializable {
+public class Pelicula implements Serializable, Comparable<Pelicula> {
     private static final long serialVersionUID = 1L;
     private String titulo;
     private int anyoSalida; 
@@ -11,9 +11,6 @@ public class Pelicula implements Serializable {
     private String director;
     private String duracion;
     
-
-
-
     //Constructors
     public Pelicula(String titulo, int anyoSalida, String genero, String director, String duracion) {
         this.titulo = titulo;
@@ -22,9 +19,8 @@ public class Pelicula implements Serializable {
         this.director = director;
         this.duracion = duracion;
     }
+
     //Getters y Setters
-
-
     public String getDuracion() {
         return duracion;
     }
@@ -58,11 +54,7 @@ public class Pelicula implements Serializable {
         this.director = director;
     }
 
-    
-
     //!Métodos
-
-
     @Override
     public String toString() {
         return "Título: " + titulo + " | Género: " + genero + " | Año sálida: " + anyoSalida + " | Director: " + director + " | Duración: " + duracion  ;
@@ -79,6 +71,12 @@ public class Pelicula implements Serializable {
         for (int i = 0; i < peliculas.size(); i++) {
             System.out.println((i+1) + ". " + peliculas.get(i));
         }
+    }
+
+
+    @Override
+    public int compareTo(Pelicula pelicula) {
+        return this.titulo.compareTo(pelicula.getTitulo());
     }
 }
 

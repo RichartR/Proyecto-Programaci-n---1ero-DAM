@@ -30,10 +30,12 @@ public class MenuLogueado {
         ArrayList<Pelicula> peliculasUsuario = deserializePeliculaUsuario(datos);
         ArrayList<Director> directoresUsuario = deserializeDirectorUsuario(datos);
 
-        sincronizarListasUsuarios(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, datos[2]); // Sincronizar las listas de los usuarios con las listas globales
+        if(datos[3].equalsIgnoreCase("ROL_USUARIO")){
+            sincronizarListasUsuarios(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, datos[2]);
+        } // Sincronizar las listas de los usuarios con las listas globales
 
         do {
-            System.out.println("\n===== Bienvenido " + datos[0] + " " + datos[1] + " =====\n¿Qué desea hacer?\n1.- Ver listas generales\n2.- Añadir datos a una lista general\n3.- Ver listas del usuario\n4.- Añadir datos a lista de usuario\n5.- Eliminar datos de una lista "  + (datos[3].equals("ROL_ADMIN") ? "general" : "del usuario" ) + "\n6.- Salir");
+            System.out.println("\n===== Bienvenido " + datos[0] + " " + datos[1] + " =====\n¿Qué desea hacer?\n1.- Ver listas generales\n2.- Mostrar lista general ordenada\n3.- Añadir datos a una lista general\n4.- Ver listas del usuario\n5.- Añadir datos a lista de usuario\n6.- Eliminar datos de una lista "  + (datos[3].equals("ROL_ADMIN") ? "general" : "del usuario" ) + "\n8.- Salir");
             System.out.print("Seleccione una opción: ");
             try {
                 opcion = scanner.nextInt();
@@ -47,25 +49,31 @@ public class MenuLogueado {
                 case 1: //Menú de ver listas general
                     eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
                     break;
-                case 2: //Menú de añadir datos general
+                case 2: //Menú para ordenar listas generales
                     eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
                     break;
-                case 3: //Menú de ver listas usuario
+                case 3: //Menú de añadir datos general
                     eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
                     break;
-                case 4: //Menú de añadir datos usuario
+                case 4: //Menú de ver listas usuario
                     eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
                     break;
-                case 5: //Menú de eliminar datos
+                case 5: //Menú de añadir datos usuario
                     eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
                     break;
-                case 6: //Salir
+                case 6: //Menú de eliminar datos
+                    eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
+                    break;
+                case 7: //Menú de ordenación
+                    eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
+                    break;
+                case 8: //Salir
                     System.out.println("Saliendo...");
                     break;
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.");
             }
-        } while (opcion != 6);
+        } while (opcion != 7);
     }
 
     //SubMenú listas
@@ -82,6 +90,7 @@ public class MenuLogueado {
                 scanner.nextLine();
                 continue;
             }
+            String tipoListas = "";
             switch (opcionTipo) {
                 case 1: //Actores
                     switch (opcion) {
@@ -89,21 +98,32 @@ public class MenuLogueado {
                             Actor.mostrarActores(actoresGlobales);
                             salir = true;
                             break;
-                        case 2: //Añadir datos global
+                        case 2: //Ordenar datos global
+                            tipoListas = "global";
+                            if(MenuOrdenacion.menuOrdenacion(actoresGlobales, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcionTipo, tipoListas)){
+                                salir = true;
+                            }
+                            break;
+                        case 3: //Añadir datos global
                             if(Listas.crearActor(actoresGlobales)){
                                 salir = true;
                             }
                             break;
-                        case 3: //Ver lista usuario
+                        case 4: //Ver lista usuario
                             Actor.mostrarActores(actoresUsuario);
                             salir = true;
                             break;
-                        case 4: //Añadir datos usuario
+                        case 5: 
+                            tipoListas = "usuario";
+                            if(MenuOrdenacion.menuOrdenacion(actoresGlobales, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcionTipo, tipoListas)){
+                                salir = true;
+                            }
+                        case 6: //Añadir datos usuario
                             if(Listas.anyadirActor(actoresUsuario, actoresGlobales, datos[2])){
                                 salir = true;
                             }
                             break;
-                        case 5: //Eliminar datos
+                        case 7: //Eliminar datos
                         if(datos[3].equals("ROL_ADMIN")){ 
                             if(Listas.eliminarActor(actoresGlobales)){
                                 salir = true;
@@ -121,21 +141,23 @@ public class MenuLogueado {
                             Pelicula.mostrarPeliculas(peliculasGlobal);
                             salir = true;
                             break;
-                        case 2: //Añadir datos global
+                        case 2:
+                            break;
+                        case 3: //Añadir datos global
                             if (Listas.crearPelicula(peliculasGlobal)) {
                                 salir = true;
                             };
                             break;
-                        case 3: //Ver lista usuario
+                        case 4: //Ver lista usuario
                             Pelicula.mostrarPeliculas(peliculasUsuario);
                             salir = true;
                             break;
-                        case 4: //Añadir datos usuario
+                        case 5: //Añadir datos usuario
                             if(Listas.anyadirPelicula(peliculasUsuario, peliculasGlobal, datos[2])){
                                 salir = true;
                             }
                             break;
-                        case 5: //Eliminar datos
+                        case 6: //Eliminar datos
                             if(datos[3].equals("ROL_ADMIN")){
                                 if(Listas.eliminarPelicula(peliculasGlobal)){
                                     salir = true;
@@ -153,21 +175,23 @@ public class MenuLogueado {
                             Director.mostrarDirectores(directoresGlobal);
                             salir = true;
                             break;
-                        case 2: //Añadir datos global
+                        case 2:
+                            break;
+                        case 3: //Añadir datos global
                             if(Listas.crearDirector(directoresGlobal)){
                                 salir = true;
                             }
                             break;
-                        case 3: //Ver lista usuario
+                        case 4: //Ver lista usuario
                             Director.mostrarDirectores(directoresUsuario);
                             salir = true;
                             break;
-                        case 4: //Añadir datos usuario
+                        case 5: //Añadir datos usuario
                             if(Listas.anyadirDirector(directoresUsuario, directoresGlobal, datos[2])){
                                 salir = true;
                             }
                             break;
-                        case 5: //Eliminar datos
+                        case 6: //Eliminar datos
                             if(datos[3].equals("ROL_ADMIN")){
                                 if(Listas.eliminarDirector(directoresGlobal)){
                                     salir = true;

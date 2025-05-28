@@ -113,7 +113,7 @@ public class Listas {
             String titulo = sc.nextLine();
 
             //Comprobar si ya existe
-             for (int i = 0; i < peliculas.size(); i++) {
+            for (int i = 0; i < peliculas.size(); i++) {
                 if (titulo.equalsIgnoreCase(peliculas.get(i).getTitulo())) {
                     System.out.println("Ya existe una película con ese título. Volviendo a la selección de listas...");
                     return false; //Salir al menú de añadir a listas generales
@@ -127,8 +127,10 @@ public class Listas {
             String genero = sc.nextLine();
             System.out.println("Director que lo dirigió:");
             String director = sc.nextLine();
+            System.out.println("Dime la duración de la película ()");
+            String duracion = sc.nextLine();
 
-            Pelicula pelicula = new Pelicula(titulo, anyoSalida, genero, director);
+            Pelicula pelicula = new Pelicula(titulo, anyoSalida, genero, director, duracion);
             peliculas.add(pelicula);
 
             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/datos/pelicula.dades", false));) {

@@ -65,7 +65,7 @@ public class Pelicula implements Serializable {
 
     @Override
     public String toString() {
-        return duracion + "Título: " + titulo + " | " + "Género: " + genero + " | " + "Año sálida: " + anyoSalida + " | " + "Director: " + director + " | " ;
+        return "Título: " + titulo + " | Género: " + genero + " | Año sálida: " + anyoSalida + " | Director: " + director + " | Duración: " + duracion  ;
     }
 
     public static void mostrarPeliculas(ArrayList<Pelicula> peliculas) {

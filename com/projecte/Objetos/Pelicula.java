@@ -2,8 +2,9 @@ package com.projecte.Objetos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Pelicula implements Serializable {
+public class Pelicula implements Serializable, Comparable<Pelicula> {
     private static final long serialVersionUID = 1L;
     private String titulo;
     private int anyoSalida; 
@@ -80,6 +81,32 @@ public class Pelicula implements Serializable {
             System.out.println((i+1) + ". " + peliculas.get(i));
         }
     }
+
+
+
+    @Override
+    public int compareTo(Pelicula t) {
+        int comparacion = this.getTitulo().compareTo(t.getTitulo());
+
+        return comparacion;
+    }
+
+    public static void ordenarPeliculaPorTitulo(ArrayList<Pelicula> peliculas){
+        peliculas.sort(new Comparator<Pelicula>(){
+
+            @Override
+            public int compare(Pelicula t1, Pelicula t2) {
+            return t1.getTitulo().compareTo(t2.getTitulo());
+            }
+            
+        }
+        
+        
+        );
+    }
+
+
+
 }
 
 

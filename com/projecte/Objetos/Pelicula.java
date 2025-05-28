@@ -9,17 +9,29 @@ public class Pelicula implements Serializable {
     private int anyoSalida; 
     private String genero;
     private String director;
+    private String duracion;
     
 
 
+
     //Constructors
-    public Pelicula(String titulo, int anyoSalida, String genero, String director) {
+    public Pelicula(String titulo, int anyoSalida, String genero, String director, String duracion) {
         this.titulo = titulo;
         this.anyoSalida = anyoSalida;
         this.genero = genero;
         this.director = director;
+        this.duracion = duracion;
     }
     //Getters y Setters
+
+
+    public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -53,7 +65,7 @@ public class Pelicula implements Serializable {
 
     @Override
     public String toString() {
-        return "Título: " + titulo + " | " + "Género: " + genero + " | " + "Año sálida: " + anyoSalida + " | " + "Director: " + director ;
+        return duracion + "Título: " + titulo + " | " + "Género: " + genero + " | " + "Año sálida: " + anyoSalida + " | " + "Director: " + director + " | " ;
     }
 
     public static void mostrarPeliculas(ArrayList<Pelicula> peliculas) {

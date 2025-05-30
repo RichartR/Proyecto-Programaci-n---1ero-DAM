@@ -2,7 +2,7 @@ package com.projecte.Objetos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-public class Director implements Serializable {
+public class Director implements Serializable, Comparable<Director> {
     private static final long serialVersionUID = 1L;
     private String nombre;
     private int edad;
@@ -47,7 +47,6 @@ public class Director implements Serializable {
         this.genero = genero;
     }
 
-
     //Métodos
     @Override
     public String toString() {
@@ -66,6 +65,9 @@ public class Director implements Serializable {
         }
     }
 
-    
+    @Override
+    public int compareTo(Director director) {
+        return this.nombre.compareTo(director.getNombre());
+    }
 
 }

@@ -35,7 +35,7 @@ public class MenuLogueado {
         } // Sincronizar las listas de los usuarios con las listas globales
 
         do {
-            System.out.println("\n===== Bienvenido " + datos[0] + " " + datos[1] + " =====\n¿Qué desea hacer?\n1.- Ver listas generales\n2.- Mostrar lista general ordenada\n3.- Añadir datos a una lista general\n4.- Ver listas del usuario\n5.- Añadir datos a lista de usuario\n6.- Eliminar datos de una lista "  + (datos[3].equals("ROL_ADMIN") ? "general" : "del usuario" ) + "\n8.- Salir");
+            System.out.println("\n===== Bienvenido " + datos[0] + " " + datos[1] + " =====\n¿Qué desea hacer?\n1.- Ver listas generales\n2.- Mostrar lista general ordenada\n3.- Añadir datos a una lista general\n4.- Ver listas del usuario\n5.- Añadir datos a lista de usuario\n6.- Eliminar datos de una lista "  + (datos[3].equals("ROL_ADMIN") ? "general" : "del usuario" ) + (!datos[3].equals("ROL_ADMIN") ? "\n7.- Ver listas de usuario ordenadas\n8.- Salir" : "\n7.- Salir"));
             System.out.print("Seleccione una opción: ");
             try {
                 opcion = scanner.nextInt();
@@ -64,16 +64,26 @@ public class MenuLogueado {
                 case 6: //Menú de eliminar datos
                     eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
                     break;
-                case 7: //Menú de ordenación
-                    eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
-                    break;
+                case 7: //Menú de ordenación para usuario
+                    if(!datos[3].equals("ROL_ADMIN")){
+                        eleccionLista(actoresGlobal, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcion, datos);
+                        break;
+                    } else {
+                        System.out.println("Saliendo...");
+                        break;
+                    }
                 case 8: //Salir
-                    System.out.println("Saliendo...");
-                    break;
+                    if(datos[3].equals("ROL_ADMIN")){
+                        System.out.println("Opción no válida. Inténtalo de nuevo.");
+                        break;
+                    } else {
+                        System.out.println("Saliendo...");
+                        break;
+                    }
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.");
             }
-        } while (opcion != 7);
+        } while ((datos[3].equals("ROL_ADMIN") ? opcion != 7 : opcion !=8));
     }
 
     //SubMenú listas
@@ -113,24 +123,24 @@ public class MenuLogueado {
                             Actor.mostrarActores(actoresUsuario);
                             salir = true;
                             break;
-                        case 5: 
-                            tipoListas = "usuario";
-                            if(MenuOrdenacion.menuOrdenacion(actoresGlobales, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcionTipo, tipoListas)){
-                                salir = true;
-                            }
-                        case 6: //Añadir datos usuario
+                        case 5: //Añadir datos usuario
                             if(Listas.anyadirActor(actoresUsuario, actoresGlobales, datos[2])){
                                 salir = true;
                             }
                             break;
-                        case 7: //Eliminar datos
-                        if(datos[3].equals("ROL_ADMIN")){ 
-                            if(Listas.eliminarActor(actoresGlobales)){
+                        case 6: //Eliminar datos
+                            if(datos[3].equals("ROL_ADMIN")){ 
+                                if(Listas.eliminarActor(actoresGlobales)){
+                                    salir = true;
+                                }
+                            } else {
+                                // Falta el método eliminar de la lista del usuario
+                            }
+                        case 7:
+                            tipoListas = "usuario";
+                            if(MenuOrdenacion.menuOrdenacion(actoresGlobales, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcionTipo, tipoListas)){
                                 salir = true;
                             }
-                        } else {
-                            // Falta el método eliminar de la lista del usuario
-                        }
                         default:
                             break;
                     }
@@ -141,7 +151,11 @@ public class MenuLogueado {
                             Pelicula.mostrarPeliculas(peliculasGlobal);
                             salir = true;
                             break;
-                        case 2:
+                        case 2: //Ordenar listas globales
+                            tipoListas = "global";
+                            if(MenuOrdenacion.menuOrdenacion(actoresGlobales, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcionTipo, tipoListas)){
+                                salir = true;
+                            }
                             break;
                         case 3: //Añadir datos global
                             if (Listas.crearPelicula(peliculasGlobal)) {
@@ -162,8 +176,13 @@ public class MenuLogueado {
                                 if(Listas.eliminarPelicula(peliculasGlobal)){
                                     salir = true;
                                 } else{
-
+                                    // Falta el método eliminar de la lista del usuario
                                 }
+                            }
+                        case 7:
+                            tipoListas = "usuario";
+                            if(MenuOrdenacion.menuOrdenacion(actoresGlobales, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcionTipo, tipoListas)){
+                                salir = true;
                             }
                         default:
                             break;
@@ -196,8 +215,13 @@ public class MenuLogueado {
                                 if(Listas.eliminarDirector(directoresGlobal)){
                                     salir = true;
                                 } else{
-                                    
+                                    // Falta el método eliminar de la lista del usuario
                                 }
+                            }
+                        case 7:
+                            tipoListas = "usuario";
+                            if(MenuOrdenacion.menuOrdenacion(actoresGlobales, actoresUsuario, peliculasGlobal, peliculasUsuario, directoresGlobal, directoresUsuario, opcionTipo, tipoListas)){
+                                salir = true;
                             }
                         default:
                             break;

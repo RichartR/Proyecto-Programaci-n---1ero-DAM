@@ -149,6 +149,7 @@ public class Listas {
 
     /* Añadir elementos a listas privadas */
     public static boolean anyadirActor(ArrayList<Actor> actoresUsuario, ArrayList<Actor> actoresGlobal, String usuario) {
+        Actor.mostrarActores(actoresGlobal);
         System.out.println("¿Qué actor quieres añadir? (Introduce el número del actor que aparece en la lista)");
         int opcion = sc.nextInt();
         sc.nextLine();
@@ -183,7 +184,8 @@ public class Listas {
     }
 
     public static boolean anyadirPelicula(ArrayList<Pelicula> peliculaUsuario, ArrayList<Pelicula> peliculaGlobal, String usuario) {
-        System.out.println("¿Qué actor quieres añadir? (Introduce el número del actor que aparece en la lista)");
+        Pelicula.mostrarPeliculas(peliculaGlobal);
+        System.out.println("¿Qué película quieres añadir? (Introduce el número del actor que aparece en la lista)");
         int opcion = sc.nextInt();
         sc.nextLine();
 
@@ -198,7 +200,7 @@ public class Listas {
                 //Comprobar si ya existe
                 for (int j = 0; j < peliculaUsuario.size(); j++) {
                     if(peliculaGlobal.get(i).getTitulo().equalsIgnoreCase(peliculaUsuario.get(j).getTitulo())){
-                        System.out.println("Ya existe ese actor.");
+                        System.out.println("Ya existe esa pelicula.");
                         return false;
                     }
                 }
@@ -218,7 +220,8 @@ public class Listas {
     }
 
     public static boolean anyadirDirector(ArrayList<Director> directorUsuario, ArrayList<Director> directorGlobal, String usuario) {
-        System.out.println("¿Qué actor quieres añadir? (Introduce el número del actor que aparece en la lista)");
+        Director.mostrarDirectores(directorGlobal);
+        System.out.println("¿Qué director quieres añadir? (Introduce el número del actor que aparece en la lista)");
         int opcion = sc.nextInt();
         sc.nextLine();
 
@@ -233,7 +236,7 @@ public class Listas {
                 //Comprobar si ya existe
                 for (int j = 0; j < directorUsuario.size(); j++) {
                     if(directorGlobal.get(i).getNombre().equalsIgnoreCase(directorUsuario.get(j).getNombre())){
-                        System.out.println("Ya existe el actor \"" + directorGlobal.get(i-1) + "\" en la lista." );
+                        System.out.println("Ya existe el director \"" + directorGlobal.get(i-1) + "\" en la lista." );
                         return false;
                     }
                 }

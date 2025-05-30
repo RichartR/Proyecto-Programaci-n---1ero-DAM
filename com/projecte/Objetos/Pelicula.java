@@ -57,7 +57,7 @@ public class Pelicula implements Serializable, Comparable<Pelicula> {
     //!Métodos
     @Override
     public String toString() {
-        return "Título: " + titulo + " | Género: " + genero + " | Año sálida: " + anyoSalida + " | Director: " + director + " | Duración: " + duracion  ;
+        return "Título: " + titulo + " | Género: " + genero + " | Año sálida: " + anyoSalida + " | Director: " + director + " | Duración: " + duracion;
     }
 
     public static void mostrarPeliculas(ArrayList<Pelicula> peliculas) {
@@ -72,7 +72,6 @@ public class Pelicula implements Serializable, Comparable<Pelicula> {
             System.out.println((i+1) + ". " + peliculas.get(i));
         }
     }
-
 
     @Override
     public int compareTo(Pelicula pelicula) {

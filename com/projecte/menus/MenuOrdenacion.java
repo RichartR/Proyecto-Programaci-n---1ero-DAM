@@ -3,6 +3,7 @@ package com.projecte.menus;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import com.projecte.Objetos.Actor;
@@ -31,9 +32,17 @@ public class MenuOrdenacion {
                     case 1:
                         if(tipoListas.equalsIgnoreCase("global")){
                             if(opcionMenu == 1){
-                                System.out.println("Actores");
+                                listaACtorOrdenadaNombre(actoresGlobales);
                             } else if(opcionMenu == 2){
-                                Collections.sort(peliculasGlobal);
+                                listaPeliculaOrdenadaTitulo(peliculasGlobal);
+                            } else {
+                                System.out.println("Directores");
+                            }
+                        } else {
+                            if(opcionMenu == 1){
+                                listaACtorOrdenadaNombre(actoresUsuario);
+                            } else if(opcionMenu == 2){
+                                listaPeliculaOrdenadaTitulo(peliculasUsuario);
                             } else {
                                 System.out.println("Directores");
                             }
@@ -54,5 +63,38 @@ public class MenuOrdenacion {
                 }
         } while (opcion != 4);
         return true;
+    }
+
+    public static void listaPeliculaOrdenadaTitulo(ArrayList<Pelicula> peliculas){
+        ArrayList<Pelicula> peliculasOrdenar = peliculas;
+        Collections.sort(peliculasOrdenar);
+
+        System.out.println("\nLista de películas ordenadas por título:");
+        Iterator<Pelicula> iteratorPelicula = peliculasOrdenar.iterator();
+        while (iteratorPelicula.hasNext()) {
+            System.out.println(iteratorPelicula.next());
+        }
+    }
+
+    public static void listaACtorOrdenadaNombre(ArrayList<Actor> actores){
+        ArrayList<Actor> actoresOrdenar = actores;
+        Collections.sort(actoresOrdenar);
+
+        System.out.println("\nLista de películas ordenadas por título:");
+        Iterator<Actor> iteratorActor = actoresOrdenar.iterator();
+        while (iteratorActor.hasNext()) {
+            System.out.println(iteratorActor.next());
+        }
+    }
+
+    public static void listaDirectoresOrdenadaNombre(ArrayList<Director> directores){
+        ArrayList<Director> directoresOrdenar = directores;
+        Collections.sort(directoresOrdenar);
+
+        System.out.println("\nLista de películas ordenadas por título:");
+        Iterator<Director> iteratorDirector = directoresOrdenar.iterator();
+        while (iteratorDirector.hasNext()) {
+            System.out.println(iteratorDirector.next());
+        }
     }
 }

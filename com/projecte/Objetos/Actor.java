@@ -3,7 +3,7 @@ package com.projecte.Objetos;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Actor implements Serializable {
+public class Actor implements Serializable, Comparable<Actor> {
     private static final long serialVersionUID = 1L;
     private String nombre;
     private int edad;
@@ -62,5 +62,10 @@ public class Actor implements Serializable {
         for (int i = 0; i < actores.size(); i++) {
             System.out.println((i+1) + ". " + actores.get(i));
         }
+    }
+
+    @Override
+    public int compareTo(Actor actor) {
+        return this.nombre.compareTo(actor.getNombre());
     }
 }

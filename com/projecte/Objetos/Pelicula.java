@@ -76,22 +76,23 @@ public class Pelicula implements Serializable, Comparable<Pelicula>, Gestionable
 
     @Override
     public int compareTo(Pelicula pelicula) {
-        return this.titulo.compareTo(pelicula.getTitulo());
+        return this.titulo.compareToIgnoreCase(pelicula.getTitulo()); //compara sin importar las mayúsculas.
     }
 
-    public static Comparator<Pelicula> porAnyoYTitulo(){
-        return new Comparator<Pelicula>(){
-
-            @Override
-            public int compare(Pelicula peliculaUno, Pelicula peliculaDos) {
-                int comparacion = Integer.compare(peliculaUno.getAnyoSalida(), peliculaDos.getAnyoSalida());
-                if(comparacion == 0){
-                    comparacion = peliculaUno.getTitulo().compareTo(peliculaDos.getTitulo());
-                }
-                return comparacion;
+    public static Comparator<Pelicula> porAnyoYTitulo() {
+    return new Comparator<Pelicula>() {
+        @Override
+        public int compare(Pelicula p1, Pelicula p2) {
+            if (p1.getAnyoSalida() > p2.getAnyoSalida()) {
+                return 1;
+            } else if (p1.getAnyoSalida() < p2.getAnyoSalida()) {
+                return -1;
+            } else {
+                return p1.getTitulo().toLowerCase().compareTo(p2.getTitulo().toLowerCase());
             }
-        };
-    }
+        }
+    };
+}
 
 
     /* Métodos de la inferfaz Gestionable */

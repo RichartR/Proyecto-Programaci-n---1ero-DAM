@@ -70,19 +70,20 @@ public class Actor implements Serializable, Comparable<Actor>, Gestionable {
         return this.nombre.compareTo(actor.getNombre());
     }
 
-    public static Comparator<Actor> porEdadYNombre(){
-        return new Comparator<Actor>(){
-
-            @Override
-            public int compare(Actor actorUno, Actor actorDos) {
-                int comparacion = Integer.compare(actorUno.getEdad(), actorDos.getEdad());
-                if(comparacion == 0){
-                    comparacion = actorUno.getNombre().compareTo(actorDos.getNombre());
-                }
-                return comparacion;
+   public static Comparator<Actor> porEdadYNombre() {
+    return new Comparator<Actor>() {
+        @Override
+        public int compare(Actor a1, Actor a2) {
+            if (a1.getEdad() > a2.getEdad()) {
+                return 1;
+            } else if (a1.getEdad() < a2.getEdad()) {
+                return -1;
+            } else {
+                return a1.getNombre().toLowerCase().compareTo(a2.getNombre().toLowerCase());
             }
-        };
-    }
+        }
+    };
+}
 
     /* Métodos de la inferfaz Gestionable */
 

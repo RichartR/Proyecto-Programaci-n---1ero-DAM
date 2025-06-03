@@ -2,7 +2,8 @@ package com.projecte.Objetos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-public class Director implements Serializable, Comparable<Director> {
+import java.util.Comparator;
+public class Director implements Serializable, Comparable<Director>, Gestionable {
     private static final long serialVersionUID = 1L;
     private String nombre;
     private int edad;
@@ -68,6 +69,37 @@ public class Director implements Serializable, Comparable<Director> {
     @Override
     public int compareTo(Director director) {
         return this.nombre.compareTo(director.getNombre());
+    }
+
+    public static Comparator<Director> porEdadYNombre(){
+        return new Comparator<Director>(){
+
+            @Override
+            public int compare(Director directorUno, Director directorDos) {
+                int comparacion = Integer.compare(directorUno.getEdad(), directorDos.getEdad());
+                if(comparacion == 0){
+                    comparacion = directorUno.getNombre().compareTo(directorDos.getNombre());
+                }
+                return comparacion;
+            }
+        };
+    }
+
+
+    /* Métodos de la inferfaz Gestionable */
+    @Override
+    public String getIdentificador() {
+        return this.nombre;
+    }
+
+    @Override
+    public String resumen() {
+        return "Nombre: " + nombre + "Edad: " + edad + " años";
+    }
+
+    @Override
+    public String mostrarDetalles() {
+        return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + " años";
     }
 
 }

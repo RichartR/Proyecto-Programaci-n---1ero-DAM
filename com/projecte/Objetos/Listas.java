@@ -127,10 +127,10 @@ public class Listas {
             String genero = sc.nextLine();
             System.out.println("Director que lo dirigió:");
             String director = sc.nextLine();
-            System.out.println("Dime la duración de la película ()");
-            String duracion = sc.nextLine();
+            System.out.println("Dime la duración de la película (En minutos)");
+            int duracionMinutos = sc.nextInt();
 
-            Pelicula pelicula = new Pelicula(titulo, anyoSalida, genero, director, duracion);
+            Pelicula pelicula = new Pelicula(titulo, anyoSalida, genero, director, duracionMinutos);
             peliculas.add(pelicula);
 
             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/datos/pelicula.dades", false));) {

@@ -2,31 +2,32 @@ package com.projecte.Objetos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Pelicula implements Serializable, Comparable<Pelicula> {
+public class Pelicula implements Serializable, Comparable<Pelicula>, Gestionable {
     private static final long serialVersionUID = 1L;
     private String titulo;
     private int anyoSalida; 
     private String genero;
     private String director;
-    private String duracion;
+    private int duracionMinutos;
     
     //Constructors
-    public Pelicula(String titulo, int anyoSalida, String genero, String director, String duracion) {
+    public Pelicula(String titulo, int anyoSalida, String genero, String director, int duracion) {
         this.titulo = titulo;
         this.anyoSalida = anyoSalida;
         this.genero = genero;
         this.director = director;
-        this.duracion = duracion;
+        this.duracionMinutos = duracion;
     }
 
     //Getters y Setters
-    public String getDuracion() {
-        return duracion;
+    public int getDuracionMinutos() {
+        return duracionMinutos;
     }
 
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
+    public void setDuracionMinutos(int duracion) {
+        this.duracionMinutos = duracion;
     }
 
     public String getTitulo() {
@@ -57,7 +58,7 @@ public class Pelicula implements Serializable, Comparable<Pelicula> {
     //!Métodos
     @Override
     public String toString() {
-        return "Título: " + titulo + " | Género: " + genero + " | Año sálida: " + anyoSalida + " | Director: " + director + " | Duración: " + duracion;
+        return "Título: " + titulo + " | Género: " + genero + " | Año sálida: " + anyoSalida + " | Director: " + director + " | Duración: " + duracionMinutos;
     }
 
     public static void mostrarPeliculas(ArrayList<Pelicula> peliculas) {
@@ -76,6 +77,37 @@ public class Pelicula implements Serializable, Comparable<Pelicula> {
     @Override
     public int compareTo(Pelicula pelicula) {
         return this.titulo.compareTo(pelicula.getTitulo());
+    }
+
+    public static Comparator<Pelicula> porAnyoYTitulo(){
+        return new Comparator<Pelicula>(){
+
+            @Override
+            public int compare(Pelicula peliculaUno, Pelicula peliculaDos) {
+                int comparacion = Integer.compare(peliculaUno.getAnyoSalida(), peliculaDos.getAnyoSalida());
+                if(comparacion == 0){
+                    comparacion = peliculaUno.getTitulo().compareTo(peliculaDos.getTitulo());
+                }
+                return comparacion;
+            }
+        };
+    }
+
+
+    /* Métodos de la inferfaz Gestionable */
+    @Override
+    public String getIdentificador() {
+        return this.titulo;
+    }
+
+    @Override
+    public String resumen() {
+        return "Título: " + titulo + " | Género: " + genero;
+    }
+
+    @Override
+    public String mostrarDetalles() {
+        return "Título: " + titulo + " | Género: " + genero + " | Año sálida: " + anyoSalida + " | Director: " + director + " | Duración: " + duracionMinutos;
     }
 }
 

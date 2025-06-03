@@ -2,8 +2,9 @@ package com.projecte.Objetos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Actor implements Serializable, Comparable<Actor> {
+public class Actor implements Serializable, Comparable<Actor>, Gestionable {
     private static final long serialVersionUID = 1L;
     private String nombre;
     private int edad;
@@ -67,5 +68,36 @@ public class Actor implements Serializable, Comparable<Actor> {
     @Override
     public int compareTo(Actor actor) {
         return this.nombre.compareTo(actor.getNombre());
+    }
+
+    public static Comparator<Actor> porEdadYNombre(){
+        return new Comparator<Actor>(){
+
+            @Override
+            public int compare(Actor actorUno, Actor actorDos) {
+                int comparacion = Integer.compare(actorUno.getEdad(), actorDos.getEdad());
+                if(comparacion == 0){
+                    comparacion = actorUno.getNombre().compareTo(actorDos.getNombre());
+                }
+                return comparacion;
+            }
+        };
+    }
+
+    /* Métodos de la inferfaz Gestionable */
+
+    @Override
+    public String resumen() {
+        return "Nombre: " + nombre + "Edad: " + edad + " años";
+    }
+
+    @Override
+    public String mostrarDetalles() {
+        return "Nombre: " + nombre + " | " + "Género: " + genero + " | " + "Nacionalidad: " + nacionalidad + " | " + "Edad: " + edad + " años";
+    }
+
+    @Override
+    public String getIdentificador() {
+        return this.nombre;
     }
 }

@@ -67,7 +67,7 @@ public class Actor implements Serializable, Comparable<Actor>, Gestionable {
 
     @Override
     public int compareTo(Actor actor) {
-        return this.nombre.compareTo(actor.getNombre());
+        return this.nombre.compareTo(actor.getIdentificador());
     }
 
     public static Comparator<Actor> porEdadYNombre(){
@@ -77,7 +77,7 @@ public class Actor implements Serializable, Comparable<Actor>, Gestionable {
             public int compare(Actor actorUno, Actor actorDos) {
                 int comparacion = Integer.compare(actorUno.getEdad(), actorDos.getEdad());
                 if(comparacion == 0){
-                    comparacion = actorUno.getNombre().compareTo(actorDos.getNombre());
+                    comparacion = actorUno.getIdentificador().compareTo(actorDos.getIdentificador());
                 }
                 return comparacion;
             }

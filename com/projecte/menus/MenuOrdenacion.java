@@ -103,7 +103,7 @@ public class MenuOrdenacion {
 
                                 System.out.println("\nActores ordenados por nombre:");
                                 for (Actor recorrerActores : actoresOrdenar) {
-                                    System.out.println(recorrerActores);
+                                    System.out.println(recorrerActores.mostrarDetalles());
                                 }
                             } else if(opcionMenu == 2){
                                 ArrayList<Pelicula> peliculasOrdenar = peliculasUsuario;
@@ -116,7 +116,7 @@ public class MenuOrdenacion {
 
                                 System.out.println("\nPelículas ordenadas por duración:");
                                 for (Pelicula recorrerPeliculas : peliculasOrdenar) {
-                                    System.out.println(recorrerPeliculas);
+                                    System.out.println(recorrerPeliculas.mostrarDetalles());
                                 }
                             } else {
                                 ArrayList<Director> directoresOrdenar = directoresUsuario;
@@ -129,7 +129,7 @@ public class MenuOrdenacion {
 
                                 System.out.println("\nDirectores ordenados por nombre:");
                                 for (Director recorrerDirectores : directoresOrdenar) {
-                                    System.out.println(recorrerDirectores);
+                                    System.out.println(recorrerDirectores.mostrarDetalles());
                                 }
                             }
                         }
@@ -172,7 +172,7 @@ public class MenuOrdenacion {
         System.out.println("\nLista de películas ordenadas por título:");
         Iterator<Pelicula> iteratorPelicula = peliculasOrdenar.iterator();
         while (iteratorPelicula.hasNext()) {
-            System.out.println(iteratorPelicula.next());
+            System.out.println(iteratorPelicula.next().mostrarDetalles());
         }
     }
 
@@ -183,7 +183,7 @@ public class MenuOrdenacion {
         System.out.println("\nLista de películas ordenadas por título:");
         Iterator<Actor> iteratorActor = actoresOrdenar.iterator();
         while (iteratorActor.hasNext()) {
-            System.out.println(iteratorActor.next());
+            System.out.println(iteratorActor.next().mostrarDetalles());
         }
     }
 
@@ -194,7 +194,7 @@ public class MenuOrdenacion {
         System.out.println("\nLista de películas ordenadas por título:");
         Iterator<Director> iteratorDirector = directoresOrdenar.iterator();
         while (iteratorDirector.hasNext()) {
-            System.out.println(iteratorDirector.next());
+            System.out.println(iteratorDirector.next().mostrarDetalles());
         }
     }
 
@@ -219,7 +219,7 @@ public class MenuOrdenacion {
         System.out.println("\nLista de películas ordenadas por año de salida y título:");
         Iterator<Pelicula> iteratorPelicula = peliculasOrdenar.iterator();
         while (iteratorPelicula.hasNext()) {
-            System.out.println(iteratorPelicula.next());
+            System.out.println(iteratorPelicula.next().mostrarDetalles());
         }
     }
 
@@ -230,7 +230,7 @@ public class MenuOrdenacion {
         System.out.println("\nLista de actores ordenadas por edad y nombre:");
         Iterator<Actor> iteratorActor = actoresOrdenar.iterator();
         while (iteratorActor.hasNext()) {
-            System.out.println(iteratorActor.next());
+            System.out.println(iteratorActor.next().mostrarDetalles());
         }
     }
 
@@ -241,7 +241,7 @@ public class MenuOrdenacion {
         System.out.println("\nLista de directores ordenadas por edad y nombre:");
         Iterator<Director> iteratorDirector = directoresOrdenar.iterator();
         while (iteratorDirector.hasNext()) {
-            System.out.println(iteratorDirector.next());
+            System.out.println(iteratorDirector.next().mostrarDetalles());
         }
     }
 }

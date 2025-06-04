@@ -130,11 +130,12 @@ public class MenuLogueado {
                             break;
                         case 6: //Eliminar datos
                             if(datos[3].equals("ROL_ADMIN")){ 
-                                if(Listas.eliminarActor(actoresGlobales)){
+                                if(Listas.eliminarActor(actoresGlobales, datos[3], datos[2])){
                                     salir = true;
                                 }
                             } else {
-                                // Falta el método eliminar de la lista del usuario
+                                Listas.eliminarActor(actoresUsuario, datos[3], datos[2]);
+                                    salir = true;
                             }
                         case 7:
                             tipoListas = "usuario";
@@ -173,10 +174,11 @@ public class MenuLogueado {
                             break;
                         case 6: //Eliminar datos
                             if(datos[3].equals("ROL_ADMIN")){
-                                if(Listas.eliminarPelicula(peliculasGlobal)){
+                                if(Listas.eliminarPelicula(peliculasGlobal, datos[3], datos[2])){
                                     salir = true;
                                 } else{
-                                    // Falta el método eliminar de la lista del usuario
+                                    Listas.eliminarPelicula(peliculasUsuario, datos[3], datos[2]);
+                                    salir = true;
                                 }
                             }
                         case 7:
@@ -212,10 +214,11 @@ public class MenuLogueado {
                             break;
                         case 6: //Eliminar datos
                             if(datos[3].equals("ROL_ADMIN")){
-                                if(Listas.eliminarDirector(directoresGlobal)){
+                                if(Listas.eliminarDirector(directoresGlobal, datos[3], datos[2])){
                                     salir = true;
                                 } else{
-                                    // Falta el método eliminar de la lista del usuario
+                                    Listas.eliminarDirector(directoresUsuario, datos[3], datos[2]);
+                                    salir = true;
                                 }
                             }
                         case 7:

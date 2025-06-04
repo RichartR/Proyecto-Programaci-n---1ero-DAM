@@ -256,13 +256,13 @@ public class Listas {
     }
 
     /* Eliminar elementos de listas generales */
-    public static boolean eliminarActor(ArrayList<Actor> actoresGlobal) {
+    public static boolean eliminarActor(ArrayList<Actor> actores, String rolUsuario, String usuario) {
         System.out.println("¿Qué actor quieres eliminar? (Introduce el número del actor que aparece en la lista, introduce 0 para salir)");
-        Actor.mostrarActores(actoresGlobal);
+        Actor.mostrarActores(actores);
         int opcion = sc.nextInt();
         sc.nextLine();
 
-        if(opcion > actoresGlobal.size() || opcion < 0){
+        if(opcion > actores.size() || opcion < 0){
             System.out.println("No existe ese actor.");
             return false;
         }
@@ -272,17 +272,27 @@ public class Listas {
             return false;
         }
 
-        Iterator <Actor> iterator = actoresGlobal.iterator();
+        Iterator <Actor> iterator = actores.iterator();
         while(iterator.hasNext()){
             Actor actor = iterator.next();
-            if(opcion - 1 == actoresGlobal.indexOf(actor)){
+            if(opcion - 1 == actores.indexOf(actor)){
                 iterator.remove();
-                try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/datos/actor.dades", false));) {
-                    out.writeObject(actoresGlobal);
-                    System.out.println("Actor eliminado.");
-                    return true; //Salir del método
-                } catch (Exception e) {
-                    System.out.println("Error: " + e.getMessage());
+                if(rolUsuario.equalsIgnoreCase("ROL_ADMIN")){
+                    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/datos/actor.dades", false));) {
+                        out.writeObject(actores);
+                        System.out.println("Actor eliminado.");
+                        return true; //Salir del método
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                } else {
+                    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/usuarios/" + usuario + "/actores.llista", false));) {
+                        out.writeObject(actores);
+                        System.out.println("Actor eliminado.");
+                        return true; //Salir del método
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                 }
             }
         }
@@ -290,13 +300,13 @@ public class Listas {
         return true;
     }
 
-    public static boolean eliminarPelicula(ArrayList<Pelicula> peliculaGlobal) {
+    public static boolean eliminarPelicula(ArrayList<Pelicula> pelicula, String rolUsuario, String usuario) {
         System.out.println("¿Qué actor quieres eliminar? (Introduce el número del actor que aparece en la lista, introduce 0 para salir)");
-        Pelicula.mostrarPeliculas(peliculaGlobal);
+        Pelicula.mostrarPeliculas(pelicula);
         int opcion = sc.nextInt();
         sc.nextLine();
 
-        if(opcion > peliculaGlobal.size() || opcion < 0){
+        if(opcion > pelicula.size() || opcion < 0){
             System.out.println("No existe ese actor.");
             return false;
         }
@@ -306,17 +316,27 @@ public class Listas {
             return false;
         }
 
-        Iterator <Pelicula> iterator = peliculaGlobal.iterator();
+        Iterator <Pelicula> iterator = pelicula.iterator();
         while(iterator.hasNext()){
             Pelicula actor = iterator.next();
-            if(opcion - 1 == peliculaGlobal.indexOf(actor)){
+            if(opcion - 1 == pelicula.indexOf(actor)){
                 iterator.remove();
-                try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/datos/actor.dades", false));) {
-                    out.writeObject(peliculaGlobal);
-                    System.out.println("Pelicula eliminada.");
-                    return true; //Salir del método
-                } catch (Exception e) {
-                    System.out.println("Error: " + e.getMessage());
+                if(rolUsuario.equalsIgnoreCase("ROL_ADMIN")){
+                    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/datos/pelicula.dades", false));) {
+                        out.writeObject(pelicula);
+                        System.out.println("Pelicula eliminada.");
+                        return true; //Salir del método
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                } else {
+                    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/usuarios/" + usuario + "/peliculas.llista", false));) {
+                        out.writeObject(pelicula);
+                        System.out.println("Pelicula eliminada.");
+                        return true; //Salir del método
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                 }
             }
         }
@@ -324,13 +344,13 @@ public class Listas {
         return true;
     }
 
-    public static boolean eliminarDirector(ArrayList<Director> directoresGlobal) {
+    public static boolean eliminarDirector(ArrayList<Director> directores, String rolUsuario, String usuario) {
         System.out.println("¿Qué actor quieres eliminar? (Introduce el número del actor que aparece en la lista, introduce 0 para salir)");
-        Director.mostrarDirectores(directoresGlobal);
+        Director.mostrarDirectores(directores);
         int opcion = sc.nextInt();
         sc.nextLine();
 
-        if(opcion > directoresGlobal.size() || opcion < 0){
+        if(opcion > directores.size() || opcion < 0){
             System.out.println("No existe ese actor.");
             return false;
         }
@@ -340,17 +360,27 @@ public class Listas {
             return false;
         }
 
-        Iterator <Director> iterator = directoresGlobal.iterator();
+        Iterator <Director> iterator = directores.iterator();
         while(iterator.hasNext()){
             Director actor = iterator.next();
-            if(opcion - 1 == directoresGlobal.indexOf(actor)){
+            if(opcion - 1 == directores.indexOf(actor)){
                 iterator.remove();
-                try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/datos/actor.dades", false));) {
-                    out.writeObject(directoresGlobal);
-                    System.out.println("Director eliminado.");
-                    return true; //Salir del método
-                } catch (Exception e) {
-                    System.out.println("Error: " + e.getMessage());
+                if(rolUsuario.equalsIgnoreCase("ROL_ADMIN")){
+                    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/datos/director.dades", false));) {
+                        out.writeObject(directores);
+                        System.out.println("Actor eliminado.");
+                        return true; //Salir del método
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                } else {
+                    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("com/projecte/usuarios/" + usuario + "/directores.llista", false));) {
+                        out.writeObject(directores);
+                        System.out.println("Actor eliminado.");
+                        return true; //Salir del método
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                 }
             }
         }

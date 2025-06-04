@@ -76,7 +76,7 @@ public class Pelicula implements Serializable, Comparable<Pelicula>, Gestionable
 
     @Override
     public int compareTo(Pelicula pelicula) {
-        return this.titulo.compareTo(pelicula.getTitulo());
+        return this.titulo.compareTo(pelicula.getIdentificador());
     }
 
     public static Comparator<Pelicula> porAnyoYTitulo(){
@@ -86,7 +86,7 @@ public class Pelicula implements Serializable, Comparable<Pelicula>, Gestionable
             public int compare(Pelicula peliculaUno, Pelicula peliculaDos) {
                 int comparacion = Integer.compare(peliculaUno.getAnyoSalida(), peliculaDos.getAnyoSalida());
                 if(comparacion == 0){
-                    comparacion = peliculaUno.getTitulo().compareTo(peliculaDos.getTitulo());
+                    comparacion = peliculaUno.getIdentificador().compareTo(peliculaDos.getIdentificador());
                 }
                 return comparacion;
             }

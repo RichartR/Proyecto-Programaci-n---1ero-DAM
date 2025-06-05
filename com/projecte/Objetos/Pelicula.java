@@ -93,7 +93,6 @@ public class Pelicula implements Serializable, Comparable<Pelicula>, Gestionable
         };
     }
 
-
     /* Métodos de la inferfaz Gestionable */
     @Override
     public String getIdentificador() {

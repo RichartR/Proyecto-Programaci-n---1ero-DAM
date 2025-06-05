@@ -13,6 +13,7 @@ import java.util.Scanner;
 import java.util.Iterator;
 
 import com.projecte.Objetos.Actor;
+import com.projecte.Objetos.CampoVacio;
 import com.projecte.Objetos.Director;
 import com.projecte.Objetos.Listas;
 import com.projecte.Objetos.Pelicula;
@@ -20,7 +21,7 @@ import com.projecte.Objetos.Pelicula;
 public class MenuLogueado {
     static Scanner scanner = new Scanner(System.in);
 
-    public static void mostrarMenuLogueado(String [] datos){ //Menú que aparece una vez ya estás logueado
+    public static void mostrarMenuLogueado(String [] datos) throws CampoVacio{ //Menú que aparece una vez ya estás logueado
         int opcion = 0;
 
         ArrayList<Actor> actoresGlobal = deserializeActorGlobal();
@@ -87,7 +88,7 @@ public class MenuLogueado {
     }
 
     //SubMenú listas
-    public static void eleccionLista(ArrayList<Actor> actoresGlobales, ArrayList<Actor> actoresUsuario, ArrayList<Pelicula> peliculasGlobal, ArrayList<Pelicula> peliculasUsuario, ArrayList<Director> directoresGlobal, ArrayList<Director> directoresUsuario, int opcion, String [] datos){
+    public static void eleccionLista(ArrayList<Actor> actoresGlobales, ArrayList<Actor> actoresUsuario, ArrayList<Pelicula> peliculasGlobal, ArrayList<Pelicula> peliculasUsuario, ArrayList<Director> directoresGlobal, ArrayList<Director> directoresUsuario, int opcion, String [] datos) throws CampoVacio{
         int opcionTipo = 0;
         boolean salir = false;
         do {

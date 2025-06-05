@@ -3,13 +3,14 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.projecte.Objetos.CampoVacio;
 import com.projecte.main.Login;
 import com.projecte.main.Registro;
 
 public class MenuPrincipal {
     static Scanner scanner = new Scanner(System.in);
 
-    public static void mostrarMenuPrincipal() throws IOException{
+    public static void mostrarMenuPrincipal() throws IOException, CampoVacio{
         int opcion = 0;
         do {
             System.out.println("\n===== Bienvenido =====\n¿Qué desea hacer?\n1.- Registrarme\n2.- Iniciar sesión\n3.- Salir");

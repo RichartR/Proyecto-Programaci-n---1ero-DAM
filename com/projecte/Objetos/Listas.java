@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -11,16 +12,20 @@ public class Listas {
 
     static final Scanner sc = new Scanner(System.in);
 
-    public static boolean crearActor(ArrayList<Actor> actores) {
+    static String mensajeError = "El campo no puede estar vacio";
 
-        // private String nombre;
-        // private int edad;
-        // private String nacionalidad;
-        // private String genero;
+    public static boolean crearActor(ArrayList<Actor> actores) throws CampoVacio {
+
         try {
+            String nombre;
+            do {
+                System.out.println("Nombre del actor:");
+                nombre = sc.nextLine();
 
-            System.out.println("Nombre del actor:");
-            String nombre = sc.nextLine();
+                if(nombre.isEmpty()){
+                    throw new CampoVacio(mensajeError);
+                }
+            } while (nombre.isEmpty());
 
             //Comprobar si ya existe
             for (int i = 0; i < actores.size(); i++) {
@@ -33,10 +38,26 @@ public class Listas {
             System.out.println("Edad del actor:");
             int edad = sc.nextInt();
             sc.nextLine();
-            System.out.println("Nacionalidad del Actor:");
-            String nacionalidad = sc.nextLine();
-            System.out.println("Género: (F o M)");
-            String genero = sc.nextLine();
+
+            String nacionalidad;
+            do {
+                System.out.println("Nacionalidad del Actor:");
+                nacionalidad = sc.nextLine();
+                if(nacionalidad.isEmpty()){
+                    throw new CampoVacio(mensajeError);
+                }
+            } while (nacionalidad.isEmpty());
+
+            String genero;
+            do {                
+                System.out.println("Género: (H o M)");
+                genero = sc.nextLine();
+                if(genero.isEmpty()){
+                    throw new CampoVacio(mensajeError);
+                } else if(!(genero.equalsIgnoreCase("h") ||genero.equalsIgnoreCase("m"))){
+                    System.out.println("Debe introducir un género correcto [H/M].");
+                }
+            } while (genero.isEmpty() || !(genero.equalsIgnoreCase("m") ||genero.equalsIgnoreCase("h")));
 
             Actor actor = new Actor(nombre, edad, nacionalidad, genero);
 
@@ -49,6 +70,9 @@ public class Listas {
                 System.out.println("Problema: " + e);
             }
 
+        } catch (InputMismatchException e){
+            sc.nextLine();
+            System.out.println("Tipo de valor incorrecto.");
         } catch (Exception e) {
             System.out.println("Problema: " + e);
         }
@@ -56,16 +80,18 @@ public class Listas {
         return true;
     }
 
-    public static boolean crearDirector(ArrayList<Director> directores) {
+    public static boolean crearDirector(ArrayList<Director> directores) throws CampoVacio {
 
-        // private String nombre;
-        // private int edad;
-        // private String nacionalidad;
-        // private String genero;
         try {
+            String nombre;
+            do {
+                System.out.println("Nombre del director:");
+                nombre = sc.nextLine();
 
-            System.out.println("Nombre del director:");
-            String nombre = sc.nextLine();
+                if(nombre.isEmpty()){
+                    throw new CampoVacio(mensajeError);
+                }
+            } while (nombre.isEmpty());
 
             //Comprobar si ya existe
             for (int i = 0; i < directores.size(); i++) {
@@ -79,10 +105,25 @@ public class Listas {
             int edad = sc.nextInt();
             sc.nextLine();
 
-            System.out.println("Nacionalidad del director:");
-            String nacionalidad = sc.nextLine();
-            System.out.println("Género: (F o M)");
-            String genero = sc.nextLine();
+            String nacionalidad;
+            do {
+                System.out.println("Nacionalidad del Actor:");
+                nacionalidad = sc.nextLine();
+                if(nacionalidad.isEmpty()){
+                    throw new CampoVacio(mensajeError);
+                }
+            } while (nacionalidad.isEmpty());
+
+            String genero;
+            do {                
+                System.out.println("Género: (H o M)");
+                genero = sc.nextLine();
+                if(genero.isEmpty()){
+                    throw new CampoVacio(mensajeError);
+                } else if(!(genero.equalsIgnoreCase("h") ||genero.equalsIgnoreCase("m"))){
+                    System.out.println("Debe introducir un género correcto [H/M].");
+                }
+            } while (genero.isEmpty() || !(genero.equalsIgnoreCase("m") ||genero.equalsIgnoreCase("h")));
 
             Director director = new Director(nombre, edad, nacionalidad, genero);
 
@@ -95,6 +136,9 @@ public class Listas {
                 System.out.println("Problema: " + e);
             }
 
+        } catch (InputMismatchException e){
+            sc.nextLine();
+            System.out.println("Tipo de valor incorrecto.");
         } catch (Exception e) {
             System.out.println("Problema: " + e);
         }
@@ -102,15 +146,19 @@ public class Listas {
         return true;
     }
 
-    public static boolean crearPelicula(ArrayList<Pelicula> peliculas) {
+    public static boolean crearPelicula(ArrayList<Pelicula> peliculas) throws CampoVacio {
 
-        // private String titulo;
-        // private int anyoSalida; 
-        // private String genero;
-        // private String director;
         try {
-            System.out.println("Título de la película:");
-            String titulo = sc.nextLine();
+
+            String titulo;
+            do {
+                System.out.println("Título de la película:");
+                titulo = sc.nextLine();
+
+                if(titulo.isEmpty()){
+                    throw new CampoVacio(mensajeError);
+                }
+            } while (titulo.isEmpty());
 
             //Comprobar si ya existe
             for (int i = 0; i < peliculas.size(); i++) {
@@ -123,12 +171,29 @@ public class Listas {
             System.out.println("Año en la que salió :");
             int anyoSalida = sc.nextInt();
             sc.nextLine();
-            System.out.println("Género de la película: (EJ: Terror)");
-            String genero = sc.nextLine();
-            System.out.println("Director que lo dirigió:");
-            String director = sc.nextLine();
-            System.out.println("Dime la duración de la película (En minutos)");
+
+            String genero;
+            do {
+                System.out.println("Género de la película: (EJ: Terror)");
+                genero = sc.nextLine();
+
+                if(genero.isEmpty()){
+                    throw new CampoVacio(mensajeError);
+                }
+            } while (genero.isEmpty());
+
+            String director;
+            do {
+                System.out.println("Director que lo dirigió:");
+                director = sc.nextLine();
+
+                if(director.isEmpty()){
+                    throw new CampoVacio(mensajeError);
+                }
+            } while (director.isEmpty());
+            System.out.println("Duración de la película (En minutos):");
             int duracionMinutos = sc.nextInt();
+            sc.nextLine();
 
             Pelicula pelicula = new Pelicula(titulo, anyoSalida, genero, director, duracionMinutos);
             peliculas.add(pelicula);
@@ -140,6 +205,9 @@ public class Listas {
                 System.out.println("Problema: " + e);
             }
 
+        } catch (InputMismatchException e){
+            sc.nextLine();
+            System.out.println("Tipo de valor incorrecto.");
         } catch (Exception e) {
             System.out.println("Problema: " + e);
         }
